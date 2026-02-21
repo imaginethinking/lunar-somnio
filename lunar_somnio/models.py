@@ -17,26 +17,28 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Dream(models.Model):
-    class Lucidity(models.IntegerChoices):
-        VERY_LOW = 1, "Very Low"
-        LOW = 2, "Low"
-        MEDIUM = 3, "Medium"
-        HIGH = 4, "High"
-        VERY_HIGH = 5, "Very High"
+    LUCIDITY_CHOICES = (
+        (1, "Very Low"),
+        (2, "Low"),
+        (3, "Medium"),
+        (4, "High"),
+        (5, "Very High"),
+    )
 
-    class SleepQuality(models.IntegerChoices):
-        VERY_LOW = 1, "Very Low"
-        LOW = 2, "Low"
-        MEDIUM = 3, "Medium"
-        HIGH = 4, "High"
-        VERY_HIGH = 5, "Very High"
+    SLEEP_QUALITY_CHOICES = (
+        (1, "Very Low"),
+        (2, "Low"),
+        (3, "Medium"),
+        (4, "High"),
+        (5, "Very High"),
+    )
 
-    class Visibility(models.TextChoices):
-        PRIVATE = "private", "Private"
-        PUBLIC = "public", "Public"
+    VISIBILITY_CHOICES = (
+        ("private", "Private"),
+        ("public", "Public"),
+    )
 
-    class Colour(models.TextChoices):
-        pass
+    COLOUR_CHOICES = ()
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
@@ -44,25 +46,25 @@ class Dream(models.Model):
 
     title = models.CharField(max_length=255)
     text = models.TextField()
-    sleep_quality = models.IntegerField(choices=SleepQuality.choices)
+    sleep_quality = models.IntegerField(choices=SLEEP_QUALITY_CHOICES)
     dreamed_at = models.DateTimeField()
-    visibility = models.CharField(max_length=10, choices=Visibility.choices)
+    visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES)
     image_url = models.URLField(blank=True, null=True)
     lucidity = models.IntegerField()
     nightmare = models.BooleanField()
-    colour = models.CharField(max_length=255, choices=Colour.choices)
+    colour = models.CharField(max_length=255, choices=COLOUR_CHOICES)
     recurring = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
 
 class Reaction(models.Model):
-
-    class Emoji(models.TextChoices):
-        HEART = "❤️", "Heart"
-        LAUGH = "😂", "Laugh"
-        SURPRISED = "😮", "Surprised"
-        SAD = "😢", "Sad"
-        FIRE = "🔥", "Fire"
+    EMOJI_CHOICES = (
+        ("heart", "❤️"),
+        ("laugh", "😂"),
+        ("surprised", "😮"),
+        ("sad", "😢"),
+        ("fire", "🔥"),
+    )
 
     # Prevents one user from reacting to the same dream multiple times
     class Meta:
@@ -71,24 +73,25 @@ class Reaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dream = models.ForeignKey(Dream, on_delete=models.CASCADE)
 
-    emoji = models.CharField(max_length=4, choices=Emoji.choices)
+    emoji = models.CharField(max_length=4, choices=EMOJI_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.emoji
 
 class Emotion(models.Model):
-    class Category(models.TextChoices):
-        ANGER = "anger", "Anger"
-        DISGUST = "disgust", "Disgust"
-        FEAR = "fear", "Fear"
-        HAPPINESS = "happiness", "Happiness"
-        SADNESS = "sadness", "Sadness"
-        NEUTRAL = "neutral", "Neutral"
+    CATEGORY_CHOICES = [
+        ("anger", "Anger"),
+        ("disgust", "Disgust"),
+        ("fear", "Fear"),
+        ("happiness", "Happiness"),
+        ("sadness", "Sadness"),
+        ("neutral", "Neutral"),
+    ]
 
     # Needs to discuss the differences between name and category
     name = models.CharField(max_length=255)
-    category = models.CharField(max_length=10, choices=Category.choices)
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
 
 class DreamAnalysis(models.Model):
