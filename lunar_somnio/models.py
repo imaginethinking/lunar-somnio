@@ -72,4 +72,7 @@ class Reaction(models.Model):
     emoji = models.CharField(max_length=4, choices=Emoji.choices)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.emoji
+
 
