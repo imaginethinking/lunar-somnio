@@ -40,6 +40,8 @@ class Dream(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
+    emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
+
     title = models.CharField(max_length=255)
     text = models.TextField()
     sleep_quality = models.IntegerField(choices=SleepQuality.choices)
@@ -75,4 +77,32 @@ class Reaction(models.Model):
     def __str__(self):
         return self.emoji
 
+class Emotion(models.Model):
+    class Category(models.TextChoices):
+        ANGER = "anger", "Anger"
+        DISGUST = "disgust", "Disgust"
+        FEAR = "fear", "Fear"
+        HAPPINESS = "happiness", "Happiness"
+        SADNESS = "sadness", "Sadness"
+        NEUTRAL = "neutral", "Neutral"
 
+    # Needs to discuss the differences between name and category
+    name = models.CharField(max_length=255)
+    category = models.CharField(max_length=10, choices=Category.choices)
+
+
+class DreamAnalysis(models.Model):
+    dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
+
+    top_emotion = models.ForeignKey(Emotion, on_delete=models.CASCADE)
+    sentiment_score = models.IntegerField()
+
+class WeatherSnapshot(models.Model):
+    dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
+
+    moonset = models.DateTimeField()
+    moonrise = models.DateTimeField()
+    moon_phase = models.CharField(max_length=255)
+    moon_illumination = models.IntegerField()
+    sunrise = models.DateTimeField()
+    sunset = models.DateTimeField()
