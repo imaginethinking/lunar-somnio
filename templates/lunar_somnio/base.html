@@ -1,16 +1,74 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 {% load lunar_somnio_template_tags %}
 
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+{#    <link rel="icon" href="{% static 'images/favicon.ico' %}">#}
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link href={% static 'CSS/style.css' %} rel='stylesheet'>
-    <title>{% block title_block %}{% endblock %}</title>
+    <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <title>
+        Lunar Somnio - {% block title_block %}{% endblock %}
+    </title>
 </head>
 <body>
-    {% block body_block %}{% endblock %}
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top py-2">
+            <a class="navbar-brand p-2" href="{% url 'lunar_somnio:index' %}">Lunar Somnio</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'lunar_somnio:index' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Dream Analyser</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="{% url 'lunar_somnio:profile' %}">
+                            <img src="{{ user.profile.image.url }}"
+                                 class="rounded-circle profile-circle"
+                                 alt="Profile">
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'lunar_somnio:login' %}"
+                           class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center profile-circle">
+                           <i class="bi bi-person-fill"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="col-12 px-4">
+                {% block body_block %}{% endblock %}
+
+                <!-- FOOTER -->
+                <footer>
+                    <p class="float-right"><a href="#">Back to top</a></p>
+                    <p>&copy; 2026 Lunar Somnio</p>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
 </body>
+
 </html>
