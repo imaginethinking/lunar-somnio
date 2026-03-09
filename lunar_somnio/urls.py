@@ -15,4 +15,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login_view, name='login'),      # 网址：/lunar_somnio/login/
     path('register/', views.register_view, name='register'), # 网址：/lunar_somnio/register/
+    path("dream/create/", views.create_dream, name='create_dream'),
 ]

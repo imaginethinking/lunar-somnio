@@ -7,24 +7,28 @@
 
 {% block body_block %}
 
-{#    <div class="jumbotron p-10">#}
-{#        <div class="container">#}
-{#            <h1 class="jumbotron-heading">Home</h1>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{#    <div>#}
-{#        <h1 class="test">This is some test text</h1>#}
-{#    </div>#}
-
     <div class="full-page">
         <div class="box">
             <h1>
                 what did you <i>dream</i> today?
             </h1>
         </div>
-        <div class="box">Div 2</div>
-    </div>
+        <div class="box bg-dark w-50 mx-auto">
+            <form method="POST">
+                {% csrf_token %}
 
+                <div class="input-group">
+                    {{ form.title }}
+
+                    <div class="input-group-append">
+                        <button class="btn bg-light rounded-right-only" type="submit">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
