@@ -2,3 +2,29 @@ h1.test {
   color: red;
   text-align: center;
 }
+
+.profilepic {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;  
+  object-fit: cover;
+}
+
+.navbar-nav {
+  align-items: center !important;
+  font-family: "Courier New";
+}
+
+.nav-link {
+    color: white;
+}
+
+.navbar {
+    background-color: gray;
+}
+
+.logo {
+  width: 150px;
+  height: 100px;  
+  object-fit: cover;
+}

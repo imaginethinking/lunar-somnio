@@ -6,5 +6,21 @@
 {% endblock %}
 
 {% block body_block %}
-<h1> HI! </h1>
+<h1> {{ dream.title }}</h1>
+<p> {{ dream.text }} </p>
+
+{% for e in emotions %}
+<p> {{ e.name }} </p>
+{% endfor %}
+
+<p> {{ weather.moonset }} </p>
+<p> {{ weather.moonrise }} </p>
+<p> {{ weather.moon_phase }} </p>
+<p> {{ weather.moon_illumination }} </p>
+<p> {{ weather.sunrise }} </p>
+<p> {{ weather.sunset }} </p>
+
+<p> {{ dream_analysis.top_emotion }} </p>
+<p> {{ dream_analysis.sentiment_score }} </p>
+
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from .models import UserProfile, Dream, Emotion
+from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
@@ -63,8 +63,26 @@ def user_profile(request):
 
 def dream_analyzer(request, id):
         
-        dream = Dream.object.get(id=id,user=user)
+        user = request.user
         
-        context_dict = {}
+        dream = Dream.objects.get(id=id,user=user)
+        emotions = dream.emotions.all()
+
+        try: weather = WeatherSnapshot.objects.get(dream=dream)
+        
+        except WeatherSnapshot.DoesNotExist:
+            weather = None
+
+        try: dream_analysis = DreamAnalysis.objects.get(dream=dream)
+        
+        except DreamAnalysis.DoesNotExist:
+            dream_analysis = None
+
+        context_dict = {
+            'dream': dream,
+            'weather': weather,
+            'dream_analysis': dream_analysis,
+            'emotions': emotions,
+        }
 
         return render(request, 'lunar_somnio/dream-analyzer.html', context=context_dict)
