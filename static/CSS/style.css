@@ -17,6 +17,7 @@ h1.test {
 
 .nav-link {
     color: white;
+    /* text-transform: uppercase; */
 }
 
 .navbar {
@@ -32,6 +33,13 @@ h1.test {
 
 .zalando-sans-semiexpanded {
   font-family: "Zalando Sans SemiExpanded", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10px;
+  font-style: normal;
+}
+
+.dm-sans {
+  font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 10px;
   font-style: normal;
@@ -81,4 +89,34 @@ body {
 
 .big-num {
   font-size: 30px;
+}
+
+.titlestyle2 {
+  color: #242e82;
+  font-size: 20px;
+  /* letter-spacing: 1px; */
+  text-align: center;
+}
+
+.dream-card {
+  width: 333px;
+  height: 300px;
+  text-align: left;
+  align-items: start;
+}
+
+.dream-bodytext {
+  font-size: 13px;
+}
+
+.emotions-card {
+  width: 333px;
+  height: 40px;
+  text-align: left;
+  align-items: start;
+}
+
+.dream-analyzer-titles {
+  font-size: 15px;
+  text-align: left;
 }

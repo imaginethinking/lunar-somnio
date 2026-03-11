@@ -6,19 +6,66 @@
 {% endblock %}
 
 {% block body_block %}
-<h1> {{ dream.title }}</h1>
-<p> {{ dream.text }} </p>
 
-{% for e in emotions %}
-<p> {{ e.name }} </p>
-{% endfor %}
+<h1 class="titlestyle2"> About {{ dream.title }}...</h1>
 
+<div class="row g-4">
+
+    <div class="col-4 px-0">
+        <div class="card dream-analyzer-titles">
+            <div class="card-body">
+                <h5 class="card-text dream-analyzer-titles">What you wrote:</h5>
+                    <div class="card dream-card">
+                        <div class="card-body">
+                            <p class="card-text dream-bodytext">{{ dream.text }}</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+   <div class="col-4 px-0">
+        <div class="card dream-analyzer-titles">
+            <div class="card-body">
+                <h5 class="card-text dream-analyzer-titles">According to our analysis, your dream could mean...</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4 px-0">
+        <div class="card dream-analyzer-titles">
+            <div class="card-body">
+                <h5 class="card-text dream-analyzer-titles">You picked:</h5>
+                    <div class="card emotions-card">
+                        <div class="card-body">
+                                {% for e in emotions %}
+                                <p class="card-text"> {{ e.name }} </p>
+                                {% endfor %}
+                        </div>
+                    </div>
+                <h5 class="card-text mt-4 dream-analyzer-titles">According to our data, this dream is predominantly related to: </h5>
+                    <div class="card emotions-card">
+                        <div class="card-body">
+                                {% for e in emotions %}
+                                <p class="card-text"> {{ e.name }} </p>
+                                {% endfor %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+        
+</div>
+
+
+<!-- 
 <p> {{ weather.moonset }} </p>
 <p> {{ weather.moonrise }} </p>
 <p> {{ weather.moon_phase }} </p>
 <p> {{ weather.moon_illumination }} </p>
 <p> {{ weather.sunrise }} </p>
-<p> {{ weather.sunset }} </p>
+<p> {{ weather.sunset }} </p> 
+//-->
 
 <p> {{ dream_analysis.top_emotion }} </p>
 <p> {{ dream_analysis.sentiment_score }} </p>
