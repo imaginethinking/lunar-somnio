@@ -41,3 +41,18 @@ body {
     font-family: "Zalando Sans SemiExpanded", sans-serif;
     background-color: #f1f1f1;
 }
+
+.card {
+  align-items: center;
+  text-align: center;
+  border-radius: 9px;
+  margin: 3px;
+}
+
+.userpic {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;  
+  object-fit: cover;
+  border: 1.4px solid #f1f1f1;
+}

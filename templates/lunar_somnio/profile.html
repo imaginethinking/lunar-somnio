@@ -7,9 +7,26 @@
 
 {% block body_block %}
     <h1>Profile</h1>
-    <p>Total Dreams: {{ total_dreams }}</p>
-    <p>Average Sleep Quality: {{ avg_sq.sleep_quality__avg }}</p>
 
+    <div class="row justify-content-end">
+
+        <div class="card col-2">
+            <div class="card-body">
+                <p class="card-title">You've registered</p>
+                <h5 class="card-text">{{ total_dreams }}</h5>
+                <p class="card-title">dreams in your journal</p>
+            </div>
+        </div>
+
+        <div class="card col-2">
+            <div class="card-body">
+                <p class="card-title">Your average sleep quality is:</p>
+                <h5 class="card-text">{{ avg_sq.sleep_quality__avg }}</h5>
+            </div>
+        </div>
+
+    <div class="row justify-content-end">
+        
     {% if recent_dream %}
     <p>Recent Dream: {{ recent_dream}}</p>
     {% else %}
@@ -29,14 +46,45 @@
     {% else %}
         <p>Top Emotions: No dreams yet!</p>
     {% endif %}
+    </div>
 
-    <p>{{ user_profile.display_name }}</p>
-    <p>{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
-    <p>{{ user_profile.country }}</p>
-    <p>{{ user_profile.gender }}</p>
-    <p>{{ user_profile.age }}</p>
-    <p>{{ user_profile.bio }}</p>
+   </div>
+
+       <div class="row">
+
+         <div class="card col-2">
+            <div class="card-body">
+                <img class="userpic" src='{{ user_profile.profile_pic }}'>
+                <p class="card-title">@{{ user_profile.display_name }}</p>
+                <h5 class="card-text">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>
+            </div>
+        </div>
+
+         <div class="card col-2">
+            <div class="card-body">
+                <h5 class="card-text">{{ user_profile.country }}</h5>
+            </div>
+        </div>
+
+         <div class="card col-2">
+            <div class="card-body">
+                <h5 class="card-text">{{ user_profile.gender }}</h5>
+            </div>
+        </div>
+
+         <div class="card col-2">
+            <div class="card-body">
+                <h5 class="card-text">{{ user_profile.age }}</h5>
+            </div>
+        </div>
+
+         <div class="card col-2">
+            <div class="card-body">
+                <h5 class="card-text">{{ user_profile.bio }}</h5>
+            </div>
+        </div>
+
+        </div>
 
 
-    <img src='{{ user_profile.profile_pic }}'>
 {% endblock %}
