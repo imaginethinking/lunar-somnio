@@ -7,7 +7,7 @@
 
 {% block body_block %}
 
-<h1 class="titlestyle2"> About {{ dream.title }}...</h1>
+<h1 class="titlestyle2"> About [<em>{{ dream.title }}</em>]...</h1>
 
 <div class="row g-4">
 
@@ -28,6 +28,24 @@
         <div class="card dream-analyzer-titles">
             <div class="card-body">
                 <h5 class="card-text dream-analyzer-titles">According to our analysis, your dream could mean...</h5>
+                    
+                    <div class="card analyzer-card">
+                        <div class="card-body">
+                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
+                        </div>
+                    </div>
+
+                    <div class="card analyzer-card">
+                        <div class="card-body">
+                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
+                        </div>
+                    </div>
+
+                    <div class="card analyzer-card">
+                        <div class="card-body">
+                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -53,8 +71,22 @@
                     </div>
             </div>
         </div>
+
+        <div class="card dream-analyzer-titles">
+            <div class="card-body">
+                <h5 class="card-text dream-analyzer-titles">The weather on:</h5>
+                    <div class="card weather-card">
+                        <div class="card-body">
+                                <p class="card-text dream-bodytext"> Weather goes here... </p>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </div>
-        
+      
+    <a href="{% url 'lunar_somnio:login' %}"><button class="btn btn-secondary btn-d1 ml-1">Edit Dream</button></a>
+    <a href="{% url 'lunar_somnio:profile' %}" class="ml-auto"><button class="btn btn-secondary btn-d2">Share this Dream</button></a>
+
 </div>
 
 

@@ -100,7 +100,7 @@ body {
 
 .dream-card {
   width: 333px;
-  height: 300px;
+  height: 400px;
   text-align: left;
   align-items: start;
 }
@@ -114,9 +114,38 @@ body {
   height: 40px;
   text-align: left;
   align-items: start;
+  justify-content: center;
 }
 
 .dream-analyzer-titles {
   font-size: 15px;
   text-align: left;
+}
+
+.weather-card {
+  width: 333px;
+  height: 178px;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
+}
+
+.btn-d1 {
+  border-radius: 6px;
+  background-color: #242e82;
+}
+
+
+.btn-d2 {
+  border-radius: 6px;
+  background-color: #242e82;
+  margin-right: 4px;
+}
+
+.analyzer-card {
+  width: 333px;
+  height: 125.5px;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
 }
