@@ -1,0 +1,42 @@
+{% extends 'lunar_somnio/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Your Profile
+{% endblock %}
+
+{% block body_block %}
+    <h1>Profile</h1>
+    <p>Total Dreams: {{ total_dreams }}</p>
+    <p>Average Sleep Quality: {{ avg_sq.sleep_quality__avg }}</p>
+
+    {% if recent_dream %}
+    <p>Recent Dream: {{ recent_dream}}</p>
+    {% else %}
+    <p>Recent Dream: No dreams yet!</p>
+    {% endif %}
+
+    {% if top_month %}
+    <p>Top Month: {{ top_month }}</p>
+    {% else %}
+    <p>Top Month: No dreams yet!</p>
+    {% endif %}
+
+    {% if top_emotions %}
+        {% for e in top_emotions %}
+            <p>Top Emotions: {{ e.name }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Top Emotions: No dreams yet!</p>
+    {% endif %}
+
+    <p>{{ user_profile.display_name }}</p>
+    <p>{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+    <p>{{ user_profile.country }}</p>
+    <p>{{ user_profile.gender }}</p>
+    <p>{{ user_profile.age }}</p>
+    <p>{{ user_profile.bio }}</p>
+
+
+    <img src='{{ user_profile.profile_pic }}'>
+{% endblock %}
