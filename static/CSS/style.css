@@ -5,14 +5,14 @@ h1.test {
 
 .profilepic {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;  
+  width: 60px;
+  height: 60px;  
   object-fit: cover;
+  border: 1.4px solid #f1f1f1;
 }
 
 .navbar-nav {
-  align-items: center !important;
-  font-family: "Courier New";
+  align-items: center;
 }
 
 .nav-link {
@@ -21,10 +21,23 @@ h1.test {
 
 .navbar {
     background-color: gray;
+    background-size: cover;
 }
 
 .logo {
   width: 150px;
   height: 100px;  
   object-fit: cover;
+}
+
+.zalando-sans-semiexpanded {
+  font-family: "Zalando Sans SemiExpanded", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10px;
+  font-style: normal;
+}
+
+body {
+    font-family: "Zalando Sans SemiExpanded", sans-serif;
+    background-color: #f1f1f1;
 }

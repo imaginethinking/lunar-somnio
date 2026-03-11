@@ -8,12 +8,17 @@
     <meta charset="UTF-8">
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href={% static 'CSS/style.css' %} rel='stylesheet'>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+SemiExpanded:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
     <title>{% block title_block %}{% endblock %}</title>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-image: url('{% static 'images/BG4.png' %}')">
   <div class="container-fluid">
     <a class="navbar-brand" href="{% url 'lunar_somnio:login' %}"> <img class="logo" src="{% static 'images/Logo3.png' %}"
                     alt="Lunar Somnio Logo" /> </a>
