@@ -19,5 +19,5 @@ urlpatterns = [
     path("dream/create/", views.create_dream, name='create_dream'),
     path("dream/upload/", views.upload_dream, name='upload_dream'),
     path('profile/', views.user_profile, name='profile'),
-    path('dream/<int:id>', views.dream_analyzer, name='dream-analyzer'),
+    path('dream/<int:id>', views.dream_analyzer, name='dream_analyzer'),
 ]

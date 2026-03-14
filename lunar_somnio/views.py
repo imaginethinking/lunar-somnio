@@ -100,7 +100,7 @@ def dream_analyzer(request, id):
             'emotions': emotions,
         }
 
-        return render(request, 'lunar_somnio/dream-analyzer.html', context=context_dict)
+        return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
 
 
 def create_dream(request):
