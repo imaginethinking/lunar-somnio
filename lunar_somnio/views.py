@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis
 from .models import UserProfile
@@ -52,6 +52,10 @@ def register_view(request):
         return redirect('lunar_somnio:login')
     return render(request, 'lunar_somnio/register.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('lunar_somnio:login')
+
 @login_required
 def user_profile(request):
     user = request.user
@@ -76,6 +80,7 @@ def user_profile(request):
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
 
+@login_required
 def dream_analyzer(request, id):
 
         user = request.user
@@ -103,6 +108,7 @@ def dream_analyzer(request, id):
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
 
 
+@login_required
 def create_dream(request):
     title = request.session.get("dream_title")
 
@@ -110,6 +116,7 @@ def create_dream(request):
 
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
 
+@login_required
 def upload_dream(request):
     if request.method == "POST":
         title = request.POST.get("title")

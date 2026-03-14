@@ -30,17 +30,76 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'lunar_somnio:index' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'lunar_somnio:dream_analyzer' 1 %}">Dream Analyzer</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'lunar_somnio:profile' %}"><img class="profilepic" src='{{ request.user.userprofile.profile_pic }}'></a>
-            </li>
-          </ul>
+<ul class="navbar-nav ml-auto">
+
+    <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+           href="{% url 'lunar_somnio:index' %}">
+           Home
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {% if request.resolver_match.url_name == 'dream_analyzer' %}active{% endif %}"
+           href="{% url 'lunar_somnio:dream_analyzer' 1 %}">
+           Dream Analyzer
+        </a>
+    </li>
+
+    {% if request.user.is_authenticated %}
+
+    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle p-0"
+           href="#"
+           id="profileDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false">
+
+            {% if request.user.userprofile.profile_pic %}
+                <img class="profilepic"
+                     src="{{ request.user.userprofile.profile_pic.url }}"
+                     alt="Profile">
+            {% else %}
+                <div class="profilepic profile-fallback">
+                    {{ request.user.username|first|upper }}
+                </div>
+            {% endif %}
+
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right">
+
+            <a class="dropdown-item"
+               href="{% url 'lunar_somnio:profile' %}">
+               Profile
+            </a>
+
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item"
+               href="{% url 'lunar_somnio:logout' %}">
+               Logout
+            </a>
+
+        </div>
+
+    </li>
+
+    {% else %}
+
+    <li class="nav-item">
+        <a class="nav-link login-circle"
+           href="{% url 'lunar_somnio:login' %}">
+           Login
+        </a>
+    </li>
+
+    {% endif %}
+
+</ul>
         </div>
       </div>
     </nav>

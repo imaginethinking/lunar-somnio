@@ -43,6 +43,48 @@
   border: 1.4px solid #f1f1f1;
 }
 
+.profile-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+}
+
+
+.login-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+  border: 1.4px solid #f1f1f1;
+
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.login-circle:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+
 .navbar-nav {
   align-items: center;
 }
