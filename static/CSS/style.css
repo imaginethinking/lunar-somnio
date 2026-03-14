@@ -9,7 +9,7 @@
 
 .box {
   padding: 0.5rem;
-  border-radius: 15px;
+  border-radius: 16px;
 }
 
 .dream-title-input {
@@ -125,6 +125,11 @@ body {
 }
 
 .card {
+  border-radius: 9px;
+  margin: 3px;
+}
+
+.card-centered {
   align-items: center;
   text-align: center;
   border-radius: 9px;
@@ -226,4 +231,110 @@ body {
   justify-content: center;
   font-style: italic;
   opacity: .5;
+}
+
+/*For rainbow trail*/
+.dream-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  filter: blur(6px);
+}
+
+.dream-bg {
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.slider-card {
+  background: #ffffff;
+  padding: 16px 18px;
+  border-radius: 14px;
+}
+
+.dream-upload-text {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* slider track */
+input[type="range"] {
+  flex: 1;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: #bdbdbd;
+  outline: none;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #5a5a5a;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #5a5a5a;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* number bubble */
+.slider-value {
+  background: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  min-width: 28px;
+  text-align: center;
+}
+
+.visibility-toggle {
+  display: flex;
+  width: 100%;
+  background: #d9d9d9;
+  padding: 6px;
+  border-radius: 14px;
+  gap: 4px;
+}
+
+.visibility-option {
+  flex: 1;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.visibility-option input[type="radio"] {
+  display: none;
+}
+
+.visibility-option span {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 10px;
+  color: #ffffff;
+  opacity: 0.55;
+  transition: 0.2s ease;
+}
+
+.visibility-option input[type="radio"]:checked + span {
+  background: white;
+  color: #7a7a7a;
+  opacity: 1;
 }
