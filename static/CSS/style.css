@@ -1,22 +1,3 @@
-.profile-circle {
-  width: 4em;
-  height: 4em;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  overflow: hidden;
-  flex: 0 0 auto;
-}
-
-.profile-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .full-page {
   min-height: 90vh;
   display: flex;
@@ -54,8 +35,153 @@
   background-color: darkgray;
 }
 
-.navbar-brand {
+.profilepic {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 1.4px solid #f1f1f1;
+}
+
+.navbar-nav {
+  align-items: center;
+}
+
+.nav-link {
+    color: white;
+    /* text-transform: uppercase; */
+}
+
+.navbar {
+    background-color: gray;
+    background-size: cover;
+}
+
+.logo {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.zalando-sans-semiexpanded {
+  font-family: "Zalando Sans SemiExpanded", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10px;
+  font-style: normal;
+}
+
+.dm-sans {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 10px;
+  font-style: normal;
+}
+
+body {
+    font-family: "Zalando Sans SemiExpanded", sans-serif;
+    background-color: #f1f1f1;
+}
+
+.card {
+  align-items: center;
+  text-align: center;
+  border-radius: 9px;
+  margin: 3px;
+}
+
+.userpic {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 1.4px solid #f1f1f1;
+}
+
+.titlestyle {
+  color: #242e82;
+  font-size: 20px;
+  /* letter-spacing: 1px; */
+  text-align: center;
+}
+
+.bio-card {
+  width: 533px;
+  height: 300px;
+  text-align: left;
+  align-items: start;
+}
+
+.bio-text {
+  font-size: 15px;
+}
+
+.profile-text-1 {
+  font-size: 13px;
+}
+
+.big-num {
+  font-size: 30px;
+}
+
+.titlestyle2 {
+  color: #242e82;
+  font-size: 20px;
+  /* letter-spacing: 1px; */
+  text-align: center;
+}
+
+.dream-card {
+  width: 333px;
+  height: 400px;
+  text-align: left;
+  align-items: start;
+}
+
+.dream-bodytext {
+  font-size: 13px;
+}
+
+.emotions-card {
+  width: 333px;
   height: 40px;
-  border-right: none;
-  margin-right: 0;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
+}
+
+.dream-analyzer-titles {
+  font-size: 15px;
+  text-align: left;
+}
+
+.weather-card {
+  width: 333px;
+  height: 178px;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
+  font-style: italic;
+  opacity: .5;
+}
+
+.btn-d1 {
+  border-radius: 6px;
+  background-color: #242e82;
+}
+
+
+.btn-d2 {
+  border-radius: 6px;
+  background-color: #242e82;
+  margin-right: 4px;
+}
+
+.analyzer-card {
+  width: 333px;
+  height: 125.5px;
+  text-align: left;
+  align-items: start;
+  justify-content: center;
+  font-style: italic;
+  opacity: .5;
 }

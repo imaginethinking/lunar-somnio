@@ -1,0 +1,119 @@
+{% extends 'lunar_somnio/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Your Profile
+{% endblock %}
+
+{% block body_block %}
+
+<div class="row">
+
+    <div class="col-6">
+        
+            <div class="card">
+                <div class="card-body d-flex justify-content-start">
+                    <img class="userpic" src='{{ user_profile.profile_pic }}'>
+                    <div class="d-flex flex-column">
+                         <div class="p-2 m-3">@{{ user_profile.display_name }}</div>
+                         <div>
+                            <h5 class="card-text d-flex">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0">
+                <div class="card col">
+                        <div class="card-body">
+                            <h5 class="card-text">{{ user_profile.country }}</h5>
+                        </div>
+                </div>
+
+                <div class="card col">
+                        <div class="card-body">
+                            <h5 class="card-text">{{ user_profile.gender }}</h5>
+                        </div>
+                </div>
+
+                <div class="card col">
+                        <div class="card-body">
+                            <h5 class="card-text">{{ user_profile.age }}</h5>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="card bio-card">
+                <div class="card-body">
+                    <h5 class="card-text bio-text">{{ user_profile.bio }}</h5>
+                </div>
+            </div>
+    </div>
+
+    <div class="col-6">
+
+        <p class="titlestyle mb-1"> This past year...</p>
+
+        <div class="row justify-content-end">
+
+            <div class="card col">
+                <div class="card-body">
+                    <p class="card-title profile-text-1">You've registered</p>
+                    <h5 class="card-text big-num">{{ total_dreams }}</h5>
+                    <p class="card-title profile-text-1">dreams in your journal</p>
+                </div>
+            </div>
+
+            <div class="card col">
+                <div class="card-body">
+                    <p class="card-title profile-text-1">Your average sleep quality is:</p>
+                    <h5 class="card-text big-num">{{ avg_sq.sleep_quality__avg }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+
+            <div class="card col">
+                <div class="card-body">
+                    {% if recent_dream %}
+                        <p class="card-title profile-text-1">Recent Dream:</p>
+                        <h5 class="card-text">{{ recent_dream.title }}</h5>
+                    {% else %}
+                        <p class="card-title profile-text-1">Recent Dream:</p>
+                        <h5 class="card-text">No dreams yet!</h5>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card col">
+                <div class="card-body">
+                    {% if top_month %}
+                    <p class="card-title profile-text-1">Top Month:</p>
+                    <h5 class="card-text">{{ top_month.month|date:"F" }}</h5>    
+                    {% else %}
+                        <p class="card-title profile-text-1">Top Month:</p>
+                        <h5 class="card-text">No dreams yet!</h5>                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card col">
+                <div class="card-body">
+                    {% if top_emotions %}
+                        {% for e in top_emotions %}
+                        <p class="card-title profile-text-1">Top Emotions:</p>
+                        <h5 class="card-text">{{ e.name }}</h5>       
+                        {% endfor %}
+                    {% else %}
+                        <p class="card-title profile-text-1">Top Emotions:</p>
+                        <h5 class="card-text">No dreams yet!</h5>                    {% endif %}
+                </div>
+            </div>        
+        </div>
+    </div>
+    
+</div>
+
+
+
+{% endblock %}
