@@ -53,4 +53,8 @@ def create_dream(request):
 
     form = DreamCreateForm(initial={"title": title})
 
-    return render(request, "lunar_somnio/create_dream.html", {"form": form})
+    return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
+
+def upload_dream(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
