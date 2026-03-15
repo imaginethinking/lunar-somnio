@@ -186,6 +186,7 @@ body {
 
 .dream-bodytext {
   font-size: 13px;
+  opacity: .8;
 }
 
 .emotions-card {
@@ -196,7 +197,7 @@ body {
   justify-content: center;
 }
 
-.dream-analyzer-titles {
+.da-titles {
   font-size: 15px;
   text-align: left;
 }
@@ -211,16 +212,10 @@ body {
   opacity: .5;
 }
 
-.btn-d1 {
+.button1 {
   border-radius: 6px;
   background-color: #242e82;
-}
-
-
-.btn-d2 {
-  border-radius: 6px;
-  background-color: #242e82;
-  margin-right: 4px;
+  color: #f1f1f1;
 }
 
 .analyzer-card {

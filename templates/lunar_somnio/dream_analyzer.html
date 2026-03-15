@@ -6,87 +6,80 @@
 {% endblock %}
 
 {% block body_block %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<h1 class="titlestyle2"> About [<em>{{ dream.title }}</em>]...</h1>
+<h1 class="titlestyle2 pt-5 pb-2"> About [<em>{{ dream.title }}</em>]...</h1>
 
-<div class="row g-4">
+<div class="row g-2 px-5">
 
-    <div class="col-4 px-0">
-        <div class="card dream-analyzer-titles">
-            <div class="card-body">
-                <h5 class="card-text dream-analyzer-titles">What you wrote:</h5>
-                    <div class="card dream-card">
-                        <div class="card-body">
-                            <p class="card-text dream-bodytext">{{ dream.text }}</p>
-                        </div>
-                    </div>
+    <!-- First column --> 
+    <div class="col-4 px-2" >
+        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">
+            <div class="card p-1 m-1">
+                <h5 class="da-titles mt-2 mx-2">What you wrote:</h5>
+                <p class="dream-bodytext mx-2"><i>{{ dream.text }} </i></p>
             </div>
         </div>
     </div>
 
-   <div class="col-4 px-0">
-        <div class="card dream-analyzer-titles">
-            <div class="card-body">
-                <h5 class="card-text dream-analyzer-titles">According to our analysis, your dream could mean...</h5>
-                    
-                    <div class="card analyzer-card">
-                        <div class="card-body">
-                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
-                        </div>
-                    </div>
-
-                    <div class="card analyzer-card">
-                        <div class="card-body">
-                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
-                        </div>
-                    </div>
-
-                    <div class="card analyzer-card">
-                        <div class="card-body">
-                            <p class="card-text dream-bodytext">Analysis Number 1 goes here...</p>
-                        </div>
-                    </div>
+    <!-- Second column -->
+   <div class="col-4 px-2">
+        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
+            <div class="card">
+                <h5 class="da-titles mt-2 mx-2">According to our analysis, your dream could mean...</h5>
+                <p class="dream-bodytext mx-2">Analysis Number 1 goes here...</p>
             </div>
         </div>
     </div>
 
-    <div class="col-4 px-0">
-        <div class="card dream-analyzer-titles">
-            <div class="card-body">
-                <h5 class="card-text dream-analyzer-titles">You picked:</h5>
-                    <div class="card emotions-card">
-                        <div class="card-body">
-                                {% for e in emotions %}
-                                <p class="card-text"> {{ e.name }} </p>
-                                {% endfor %}
-                        </div>
-                    </div>
-                <h5 class="card-text mt-4 dream-analyzer-titles">According to our data, this dream is predominantly related to: </h5>
-                    <div class="card emotions-card">
-                        <div class="card-body">
-                                {% for e in emotions %}
-                                <p class="card-text"> {{ e.name }} </p>
-                                {% endfor %}
-                        </div>
-                    </div>
+    <!-- Third column -->
+    <div class="col-4 px-2">
+
+        <!-- Emotions Card -->
+        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
+            <div class="card">
+                <h5 class="da-titles mt-2 mx-2">You picked:</h5>
+                <div>
+                    {% for e in emotions %}
+                        <p class="dream-bodytext mx-2"> {{ e.name }} </p>
+                    {% endfor %}
+                        <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Happiness </p> 
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <h5 class="da-titles mt-2 mx-2">According to our data, this dream is predominantly related to: </h5>
+                <div>
+                    {% for e in emotions %}
+                        <p class="dream-bodytext mx-2"> {{ e.name }} </p>
+                    {% endfor %}
+                         <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Happiness </p> 
+                </div>
             </div>
         </div>
 
-        <div class="card dream-analyzer-titles">
-            <div class="card-body">
-                <h5 class="card-text dream-analyzer-titles">The weather on:</h5>
-                    <div class="card weather-card">
-                        <div class="card-body">
-                                <p class="card-text dream-bodytext"> Weather goes here... </p>
-                        </div>
-                    </div>
+        <!-- Weather Card -->
+        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
+            <div class="card">
+                <h5 class="da-titles mt-2 mx-2">The weather on:</h5>
+                <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Weather goes here... </p>
             </div>
         </div>
+
     </div>
-      
-    <a href="{% url 'lunar_somnio:login' %}"><button class="btn btn-secondary btn-d1 ml-1">Edit Dream</button></a>
-    <a href="{% url 'lunar_somnio:profile' %}" class="ml-auto"><button class="btn btn-secondary btn-d2">Share this Dream</button></a>
+          
+</div>
 
+<!-- Buttons at end -->
+ 
+<div class="d-flex justify-content-between px-4">
+    <a href="{% url 'lunar_somnio:login' %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button></a>
+        <div class="d-flex" style="margin-right: 16px">
+            <a href="{% url 'lunar_somnio:profile' %}"><button class="btn button1 dream-bg mx-2" style="--bg-image: url('{% static "images/BG75.png" %}')">
+                <i class="bi bi-chevron-left"></i></button></a>
+            <a href="{% url 'lunar_somnio:profile' %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
+                <i class="bi bi-chevron-right"></i></button></a>
+        </div>
 </div>
 
 

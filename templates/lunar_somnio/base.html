@@ -60,7 +60,7 @@
 
             {% if request.user.userprofile.profile_pic %}
                 <img class="profilepic"
-                     src="{{ request.user.userprofile.profile_pic.url }}"
+                     src="{{ request.user.userprofile.profile_pic }}"
                      alt="Profile">
             {% else %}
                 <div class="profilepic profile-fallback">
