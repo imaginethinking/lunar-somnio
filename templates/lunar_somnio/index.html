@@ -32,15 +32,15 @@
     </div>
 
 
-    <div class="container full-page mb-5">
+    <div class="container-fluid full-page mb-5">
         <div class="box">
             <img src="{% static "images/Logo3.png" %}" alt="Dream Feed" class="mb-4">
         </div>
 
         <div class="row">
             {% for dream in public_dreams %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="box dream-bg" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                <div class="col-12 col-md-6 col-lg-6 mb-4">
+                    <div class="box dream-bg d-flex justify-content-center" style="--bg-image: url('{% static "images/BG4.png" %}')">
                         <div class="card h-100 shadow-sm">
                             <div class="card-body">
                                 <h5 class="card-title">{{ dream.title }}</h5>
@@ -50,16 +50,16 @@
                                 </p>
 
                                 <p class="card-text">
-                                    {{ dream.text|truncatechars:300 }}
+                                    {{ dream.text|truncatechars:500 }}
                                 </p>
 
                                 <p class="mb-2">
-                                    <small class="text-muted">
-                                        Dreamed at: {{ dream.dreamed_at|date:"d M Y, H:i" }}
+                                    <small class="text-muted text-nowrap">
+                                        Dreamed at: {{ dream.dreamed_at|date:"d M Y" }}
                                     </small>
                                 </p>
 
-                                {% if dream.emotions.all %}
+                                {% if dream.emotion %}
                                     <div class="mb-2">
                                         <span class="badge badge-secondary">
                                             {{ dream.emotion }}
