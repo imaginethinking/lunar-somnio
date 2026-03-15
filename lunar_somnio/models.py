@@ -38,8 +38,6 @@ class Dream(models.Model):
         ("public", "Public"),
     )
 
-    COLOUR_CHOICES = ()
-
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
     emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
@@ -48,11 +46,11 @@ class Dream(models.Model):
     text = models.TextField()
     sleep_quality = models.IntegerField(choices=SLEEP_QUALITY_CHOICES)
     dreamed_at = models.DateTimeField()
-    visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES)
+    visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES, default="private")
     image_url = models.URLField(blank=True, null=True)
     lucidity = models.IntegerField()
     nightmare = models.BooleanField()
-    colour = models.CharField(max_length=255, choices=COLOUR_CHOICES)
+    colour = models.CharField(max_length=7, blank=True, default="#ffffff")
     recurring = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)

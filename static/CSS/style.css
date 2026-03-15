@@ -1,15 +1,89 @@
-h1.test {
-  color: red;
-  text-align: center;
+.full-page {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.box {
+  padding: 0.5rem;
+  border-radius: 16px;
+}
+
+.dream-title-input {
+    border-radius: 15px;
+    padding: 18px 25px;
+    font-size: 1.25rem;
+    border: none;
+    background: #f5f5f5;
+}
+
+.dream-title-input:focus {
+    outline: none;
+    background: white;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+}
+
+.rounded-right-only {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.bg-dark-custom {
+  background-color: darkgray;
 }
 
 .profilepic {
   border-radius: 50%;
   width: 60px;
-  height: 60px;  
+  height: 60px;
   object-fit: cover;
   border: 1.4px solid #f1f1f1;
 }
+
+.profile-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+}
+
+
+.login-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+  border: 1.4px solid #f1f1f1;
+
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 12px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.login-circle:hover {
+  background: rgba(255,255,255,0.2);
+}
+
 
 .navbar-nav {
   align-items: center;
@@ -27,7 +101,7 @@ h1.test {
 
 .logo {
   width: 150px;
-  height: 100px;  
+  height: 100px;
   object-fit: cover;
 }
 
@@ -51,6 +125,11 @@ body {
 }
 
 .card {
+  border-radius: 9px;
+  margin: 3px;
+}
+
+.card-centered {
   align-items: center;
   text-align: center;
   border-radius: 9px;
@@ -60,7 +139,7 @@ body {
 .userpic {
   border-radius: 50%;
   width: 150px;
-  height: 150px;  
+  height: 150px;
   object-fit: cover;
   border: 1.4px solid #f1f1f1;
 }
@@ -152,4 +231,110 @@ body {
   justify-content: center;
   font-style: italic;
   opacity: .5;
+}
+
+/*For rainbow trail*/
+.dream-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  filter: blur(6px);
+}
+
+.dream-bg {
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.slider-card {
+  background: #ffffff;
+  padding: 16px 18px;
+  border-radius: 14px;
+}
+
+.dream-upload-text {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* slider track */
+input[type="range"] {
+  flex: 1;
+  appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: #bdbdbd;
+  outline: none;
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #5a5a5a;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #5a5a5a;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* number bubble */
+.slider-value {
+  background: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  min-width: 28px;
+  text-align: center;
+}
+
+.visibility-toggle {
+  display: flex;
+  width: 100%;
+  background: #d9d9d9;
+  padding: 6px;
+  border-radius: 14px;
+  gap: 4px;
+}
+
+.visibility-option {
+  flex: 1;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.visibility-option input[type="radio"] {
+  display: none;
+}
+
+.visibility-option span {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 10px;
+  color: #ffffff;
+  opacity: 0.55;
+  transition: 0.2s ease;
+}
+
+.visibility-option input[type="radio"]:checked + span {
+  background: white;
+  color: #7a7a7a;
+  opacity: 1;
 }

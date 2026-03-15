@@ -134,5 +134,5 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 # Registration variables
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = 'lunar-somnio:index'
-LOGIN_URL = 'auth_login'
+LOGIN_REDIRECT_URL = 'lunar_somnio:login'
+LOGIN_URL = 'lunar_somnio:login'

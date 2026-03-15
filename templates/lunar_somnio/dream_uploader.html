@@ -1,0 +1,149 @@
+{% extends 'lunar_somnio/base.html' %}
+{% load static %}
+
+
+{% block title_block %}
+    Dream Uploader
+{% endblock %}
+
+{% block body_block %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-5">
+        tell me more about <em>{{ form.title.value }}</em>...
+    </h2>
+
+    <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
+        {% csrf_token %}
+        {{ form.title.as_hidden }}
+
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    {{ field.label }}: {{ error }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="row">
+
+            <!-- column 1 for the dream text, emotions, and date -->
+            <div class="col-lg-8">
+
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card p-1 m-1">
+                        <div class="form-group mb-0">
+                            {{ form.text }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card p-1 m-1">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control" placeholder="Type to add emotions...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card p-1 m-1">
+                        <div class="col">
+                            {{ form.dreamed_at }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <!-- column 2 for the dream flags, sleep quality, lucidity, and background image -->
+            <div class="col-lg-4">
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card p-2 m-1">
+                        <div class="form-check">
+                            {{ form.recurring }} Is this a <em>recurring</em> dream
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card p-3 m-1">
+                        <div class="form-check">
+                            {{ form.nightmare }} Is this a <em>nightmare</em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="slider-card m-1">
+                        <div>
+                            How would you rate your <em>sleep quality</em>?
+                        </div>
+                        <div class="slider-row">
+                            {{ form.sleep_quality }}
+                            <div class="slider-value" id="sleep_value">
+                                {{ form.sleep_quality.value|default:3 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="slider-card m-1">
+                        <div>
+                            How would you rate your <em>sleep lucidity</em>?
+                        </div>
+                        <div class="slider-row">
+                            {{ form.lucidity }}
+                            <div class="slider-value" id="lucidity_value">
+                                {{ form.lucidity.value|default:3 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="card slider-card m-1">
+                        <div>
+                            Dream <em>colour</em>
+                        </div>
+                        <div>
+                            {{ form.colour }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <div class="visibility-toggle">
+                        {% for radio in form.visibility %}
+                            <label class="visibility-option">
+                                {{ radio.tag }}
+                                <span>{{ radio.choice_label }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
+                    <button class="btn btn-block">
+                        <strong>Add to Journal</strong>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+    <script src="{% static 'js/dream_upload_sliders.js' %}"></script>
+{% endblock %}
