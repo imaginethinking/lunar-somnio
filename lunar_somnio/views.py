@@ -25,7 +25,20 @@ def index(request):
     else:
         form = DreamTitleForm()
 
-    return render(request, "lunar_somnio/index.html", {"form": form})
+    public_dreams = (
+        Dream.objects
+        .filter(visibility="public")
+        .select_related("user")
+        .prefetch_related("emotions")
+        .order_by("-created_at")
+    )
+
+    context_dict = {
+        "form": form,
+        "public_dreams": public_dreams,
+    }
+
+    return render(request, "lunar_somnio/index.html", context_dict)
 
 def login_view(request):
     if request.method == 'POST':
