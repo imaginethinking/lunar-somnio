@@ -16,6 +16,23 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class Emotion(models.Model):
+    CATEGORY_CHOICES = [
+        ("anger", "Anger"),
+        ("disgust", "Disgust"),
+        ("fear", "Fear"),
+        ("happiness", "Happiness"),
+        ("sadness", "Sadness"),
+        ("neutral", "Neutral"),
+    ]
+
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, unique=True)
+
+    def __str__(self):
+        return self.get_category_display()
+
+
 class Dream(models.Model):
     LUCIDITY_CHOICES = (
         (1, "Very Low"),
@@ -40,7 +57,7 @@ class Dream(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
-    emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
+    emotion = models.ForeignKey(Emotion, on_delete=models.PROTECT, related_name="dreams", default=6)
 
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -76,20 +93,6 @@ class Reaction(models.Model):
 
     def __str__(self):
         return self.emoji
-
-class Emotion(models.Model):
-    CATEGORY_CHOICES = [
-        ("anger", "Anger"),
-        ("disgust", "Disgust"),
-        ("fear", "Fear"),
-        ("happiness", "Happiness"),
-        ("sadness", "Sadness"),
-        ("neutral", "Neutral"),
-    ]
-
-    # Needs to discuss the differences between name and category
-    name = models.CharField(max_length=255)
-    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
 
 
 class DreamAnalysis(models.Model):

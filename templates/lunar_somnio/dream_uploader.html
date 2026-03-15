@@ -43,7 +43,8 @@
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
                     <div class="card p-1 m-1">
                         <div class="form-group mb-0">
-                            <input type="text" class="form-control" placeholder="Type to add emotions...">
+                            <label for="{{ form.emotion.id_for_label }}">Emotion</label>
+                            {{ form.emotion }}
                         </div>
                     </div>
                 </div>
@@ -74,7 +75,7 @@
 
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
-                    <div class="card p-3 m-1">
+                    <div class="card p-2 m-1">
                         <div class="form-check">
                             {{ form.nightmare }} Is this a <em>nightmare</em>
                         </div>

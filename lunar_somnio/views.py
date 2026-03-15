@@ -28,8 +28,7 @@ def index(request):
     public_dreams = (
         Dream.objects
         .filter(visibility="public")
-        .select_related("user")
-        .prefetch_related("emotions")
+        .select_related("user", "emotion")
         .order_by("-created_at")
     )
 
@@ -98,8 +97,8 @@ def dream_analyzer(request, id):
 
         user = request.user
 
-        dream = Dream.objects.get(id=id,user=user)
-        emotions = dream.emotions.all()
+        dream = Dream.objects.select_related("emotion", "user").get(id=id, user=user)
+        emotion = dream.emotion
 
         try: weather = WeatherSnapshot.objects.get(dream=dream)
 
@@ -115,7 +114,7 @@ def dream_analyzer(request, id):
             'dream': dream,
             'weather': weather,
             'dream_analysis': dream_analysis,
-            'emotions': emotions,
+            'emotion': emotion,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
@@ -141,8 +140,6 @@ def upload_dream(request):
             dream = form.save(commit=False)
             dream.user = request.user
             dream.save()
-
-            form.save_m2m()
 
             request.session.pop("dream_title", None)
 

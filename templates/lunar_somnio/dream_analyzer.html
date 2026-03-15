@@ -56,17 +56,17 @@
                 <h5 class="card-text dream-analyzer-titles">You picked:</h5>
                     <div class="card emotions-card">
                         <div class="card-body">
-                                {% for e in emotions %}
-                                <p class="card-text"> {{ e.name }} </p>
-                                {% endfor %}
+                            {% if emotion %}
+                                <p class="card-text">{{ emotion }}</p>
+                            {% endif %}
                         </div>
                     </div>
                 <h5 class="card-text mt-4 dream-analyzer-titles">According to our data, this dream is predominantly related to: </h5>
                     <div class="card emotions-card">
                         <div class="card-body">
-                                {% for e in emotions %}
-                                <p class="card-text"> {{ e.name }} </p>
-                                {% endfor %}
+                            {% if emotion %}
+                                <p class="card-text">{{ emotion }}</p>
+                            {% endif %}
                         </div>
                     </div>
             </div>

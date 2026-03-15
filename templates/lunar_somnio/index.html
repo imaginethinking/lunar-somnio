@@ -61,9 +61,9 @@
 
                                 {% if dream.emotions.all %}
                                     <div class="mb-2">
-                                        {% for emotion in dream.emotions.all %}
-                                            <span class="badge badge-secondary">{{ emotion.name }}</span>
-                                        {% endfor %}
+                                        <span class="badge badge-secondary">
+                                            {{ dream.emotion }}
+                                        </span>
                                     </div>
                                 {% endif %}
                             </div>
