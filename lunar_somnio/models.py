@@ -55,6 +55,9 @@ class Dream(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
 
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
 class Reaction(models.Model):
     EMOJI_CHOICES = (
         ("heart", "❤️"),
@@ -79,17 +82,18 @@ class Reaction(models.Model):
 
 class Emotion(models.Model):
     CATEGORY_CHOICES = [
-        ("anger", "Anger"),
-        ("disgust", "Disgust"),
-        ("fear", "Fear"),
-        ("happiness", "Happiness"),
-        ("sadness", "Sadness"),
-        ("neutral", "Neutral"),
+        ("Anger", "Anger"),
+        ("Disgust", "Disgust"),
+        ("Fear", "Fear"),
+        ("Happiness", "Happiness"),
+        ("Sadness", "Sadness"),
+        ("Neutral", "Neutral"),
     ]
 
-    # Needs to discuss the differences between name and category
-    name = models.CharField(max_length=255)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
+
+    def __str__(self):
+        return self.category
 
 
 class DreamAnalysis(models.Model):

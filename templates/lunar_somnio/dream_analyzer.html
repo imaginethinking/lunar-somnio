@@ -8,7 +8,7 @@
 {% block body_block %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<h1 class="titlestyle2 pt-5 pb-2"> About [<em>{{ dream.title }}</em>]...</h1>
+<h1 class="da-maintitle pt-5 pb-2"> About [<em>{{ dream.title }}</em>]...</h1>
 
 <div class="row g-2 px-5">
 
@@ -39,21 +39,20 @@
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
             <div class="card">
                 <h5 class="da-titles mt-2 mx-2">You picked:</h5>
-                <div>
+                <div class="d-flex flex-wrap gap-2 mb-1 ml-1">
                     {% for e in emotions %}
-                        <p class="dream-bodytext mx-2"> {{ e.name }} </p>
+                        <span class="emotion-tag">{{ e.category|capfirst }}</span>
                     {% endfor %}
-                        <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Happiness </p> 
                 </div>
             </div>
             
             <div class="card mt-3">
                 <h5 class="da-titles mt-2 mx-2">According to our data, this dream is predominantly related to: </h5>
-                <div>
+                <div class="d-flex flex-wrap gap-2 mb-1 ml-1">
                     {% for e in emotions %}
-                        <p class="dream-bodytext mx-2"> {{ e.name }} </p>
+                        <!-- <span class="emotion-tag"> emotion analyzed goes here </span> -->
                     {% endfor %}
-                         <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Happiness </p> 
+                    <span class="emotion-tag"> EMOTION GOES HERE </span>
                 </div>
             </div>
         </div>
@@ -75,10 +74,14 @@
 <div class="d-flex justify-content-between px-4">
     <a href="{% url 'lunar_somnio:login' %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button></a>
         <div class="d-flex" style="margin-right: 16px">
-            <a href="{% url 'lunar_somnio:profile' %}"><button class="btn button1 dream-bg mx-2" style="--bg-image: url('{% static "images/BG75.png" %}')">
+            {% if prev_dream %}
+            <a href="{% url 'lunar_somnio:dream_analyzer' prev_dream.id  %}"><button class="btn button1 dream-bg mx-2" style="--bg-image: url('{% static "images/BG75.png" %}')">
                 <i class="bi bi-chevron-left"></i></button></a>
-            <a href="{% url 'lunar_somnio:profile' %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
+            {% endif %}
+            {% if next_dream %}
+            <a href="{% url 'lunar_somnio:dream_analyzer' next_dream.id  %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
                 <i class="bi bi-chevron-right"></i></button></a>
+            {% endif %}
         </div>
 </div>
 

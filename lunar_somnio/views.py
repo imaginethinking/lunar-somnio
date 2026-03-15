@@ -101,6 +101,9 @@ def dream_analyzer(request, id):
         dream = Dream.objects.get(id=id,user=user)
         emotions = dream.emotions.all()
 
+        next_dream = Dream.objects.filter(user=user, id=dream.id+1).first()
+        prev_dream = Dream.objects.filter(user=user, id=dream.id-1).first()
+
         try: weather = WeatherSnapshot.objects.get(dream=dream)
 
         except WeatherSnapshot.DoesNotExist:
@@ -116,6 +119,8 @@ def dream_analyzer(request, id):
             'weather': weather,
             'dream_analysis': dream_analysis,
             'emotions': emotions,
+            'next_dream': next_dream,
+            'prev_dream': prev_dream,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
