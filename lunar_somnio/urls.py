@@ -13,4 +13,5 @@ urlpatterns = [
     path("dream/upload/", views.upload_dream, name='upload_dream'),
     path('profile/', views.user_profile, name='profile'),
     path('dream/<int:id>', views.dream_analyzer, name='dream_analyzer'),
+    path("dream/<int:dream_id>/react/", views.react_to_dream, name="react_to_dream"),
 ]

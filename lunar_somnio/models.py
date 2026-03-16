@@ -85,8 +85,8 @@ class Reaction(models.Model):
     class Meta:
         unique_together = ("user", "dream", "emoji")
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dream = models.ForeignKey(Dream, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reactions")
+    dream = models.ForeignKey(Dream, on_delete=models.CASCADE, related_name="reactions")
 
     emoji = models.CharField(max_length=4, choices=EMOJI_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
