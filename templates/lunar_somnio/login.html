@@ -5,23 +5,25 @@
 
 {% block body_block %}
 <div class="full-page">
-    <div class="text-center mb-4">
-        <img src="{% static 'images/Logo3.png' %}" alt="Lunar Somnio" style="max-width: 180px; margin-bottom: 20px;">
-        <h1 class="font-weight-bold zalando-sans-semiexpanded" style="font-size: 2.5rem; letter-spacing: -1px; text-transform: uppercase;">Login to your dreams</h1>
+    <div class="text-center">
+        <img src="{% static 'images/Logo3.png' %}" alt="Lunar Somnio" style="max-width: 140px; margin-bottom: 10px;">
+        <h1 class="font-weight-bold zalando-sans-semiexpanded" style="font-size: 2.2rem; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 0;">Login to your dreams</h1>
+        <p class="text-muted" style="font-size: 0.9rem; margin-top: 4px;">Welcome! Please enter your details.</p>
     </div>
     
-    <div class="box dream-bg" style="--bg-image: url('{% static 'images/BG4.png' %}'); width: 450px; padding: 40px; border-radius: 30px;">
-        <div class="card p-4" style="background: rgba(255, 255, 255, 0.95); border-radius: 20px; border: none; box-shadow: none;">
+    <div class="box mt-4" style="background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('{% static 'images/BG4.png' %}'); background-size: cover; width: 400px; padding: 30px; border-radius: 30px;">
+        
+        <div class="card p-4" style="background: white; border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
             <form method="POST">
                 {% csrf_token %}
-                <input type="text" name="username" class="form-control dream-title-input mb-3" placeholder="Username" required>
-                <input type="password" name="password" class="form-control dream-title-input mb-2" placeholder="Password" required>
+                <input type="text" name="username" class="form-control dream-title-input mb-3" placeholder="Username" required style="font-size: 0.9rem; padding: 12px 20px;">
+                <input type="password" name="password" class="form-control dream-title-input mb-2" placeholder="Password" required style="font-size: 0.9rem; padding: 12px 20px;">
                 
-                <div class="text-right mb-4">
-                    <a href="#" class="small text-muted">Forgot password?</a>
+                <div class="text-right mb-3">
+                    <a href="#" class="small text-muted" style="font-size: 0.75rem;">Forgot password?</a>
                 </div>
                 
-                <button type="submit" class="btn btn-block dream-title-input" style="background-color: #333; color: white; height: auto; padding: 15px; font-weight: 500;">
+                <button type="submit" class="btn btn-block dream-title-input" style="background-color: #333; color: white; height: auto; padding: 12px; font-weight: 500; font-size: 1rem;">
                     Log In
                 </button>
             </form>
