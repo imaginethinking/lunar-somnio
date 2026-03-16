@@ -31,8 +31,8 @@ def index(request):
     public_dreams = (
         Dream.objects
         .filter(visibility="public")
-        .select_related("user", "emotion")
-        .prefetch_related("reactions")
+        .select_related("user")
+        .prefetch_related("emotions", "reactions")
         .order_by("-created_at")
     )
 

@@ -32,12 +32,12 @@
     </div>
 
 
-    <div class="container-fluid full-page mb-5">
-        <div class="box fade-section">
+    <div class="container-fluid mb-5">
+        <div class="box fade-section text-center">
             <img src="{% static "images/Logo3.png" %}" alt="Dream Feed" class="mb-4">
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             {% for dream in public_dreams %}
                 <div id="dream-{{ dream.id }}" class="col-12 col-md-6 col-lg-4 mb-4 fade-section">
                     <div class="box dream-bg d-flex justify-content-center" style="--bg-image: url('{% static "images/BG4.png" %}')">
@@ -59,11 +59,13 @@
                                     </small>
                                 </p>
 
-                                {% if dream.emotion %}
+                                {% if dream.emotions.exists %}
                                     <div class="mb-2">
-                                        <span class="badge badge-secondary">
-                                            {{ dream.emotion }}
-                                        </span>
+                                        {% for emotion in dream.emotions.all %}
+                                            <span class="badge badge-secondary">
+                                                {{ emotion }}
+                                            </span>
+                                        {% endfor %}
                                     </div>
                                 {% endif %}
 
