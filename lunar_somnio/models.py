@@ -88,7 +88,7 @@ class Reaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     dream = models.ForeignKey(Dream, on_delete=models.CASCADE)
 
-    emoji = models.CharField(max_length=4, choices=EMOJI_CHOICES)
+    emoji = models.CharField(max_length=20, choices=EMOJI_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
