@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis
+from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis, Reaction
 from .models import UserProfile
 from django.contrib import messages
 from .forms import DreamTitleForm, DreamCreateForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
+from django.http import JsonResponse
 
 
 # 必须加上这个 index 函数，否则服务器启动会崩溃
@@ -29,8 +30,24 @@ def index(request):
         Dream.objects
         .filter(visibility="public")
         .select_related("user", "emotion")
+        .prefetch_related("reactions")
         .order_by("-created_at")
     )
+
+    for dream in public_dreams:
+        dream.heart_count = dream.reactions.filter(emoji="heart").count()
+        dream.laugh_count = dream.reactions.filter(emoji="laugh").count()
+        dream.surprised_count = dream.reactions.filter(emoji="surprised").count()
+        dream.sad_count = dream.reactions.filter(emoji="sad").count()
+        dream.fire_count = dream.reactions.filter(emoji="fire").count()
+
+        if request.user.is_authenticated:
+            user_reactions = set(
+                dream.reactions.filter(user=request.user).values_list("emoji", flat=True)
+            )
+            dream.user_reacted = user_reactions
+        else:
+            dream.user_reacted = set()
 
     context_dict = {
         "form": form,
@@ -38,6 +55,7 @@ def index(request):
     }
 
     return render(request, "lunar_somnio/index.html", context_dict)
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -50,6 +68,7 @@ def login_view(request):
         else:
             messages.error(request, "Invalid username or password.")
     return render(request, 'lunar_somnio/login.html')
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -73,9 +92,11 @@ def register_view(request):
             
     return render(request, 'lunar_somnio/register.html')
 
+
 def logout_view(request):
     logout(request)
     return redirect('lunar_somnio:login')
+
 
 @login_required
 def user_profile(request):
@@ -100,6 +121,7 @@ def user_profile(request):
     context_dict['top_emotions'] = top_emotions
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
+
 
 @login_required
 def dream_analyzer(request, id):
@@ -140,6 +162,7 @@ def create_dream(request):
 
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
 
+
 @login_required
 def upload_dream(request):
     if request.method == "POST":
@@ -158,3 +181,35 @@ def upload_dream(request):
         form = DreamCreateForm(initial={"title": title})
 
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
+
+
+@login_required
+def react_to_dream(request, dream_id):
+    if request.method != "POST":
+        return JsonResponse({"success": False}, status=405)
+
+    dream = get_object_or_404(Dream, id=dream_id, visibility="public")
+    emoji = request.POST.get("emoji")
+
+    reaction, created = Reaction.objects.get_or_create(
+        user=request.user,
+        dream=dream,
+        emoji=emoji
+    )
+
+    if not created:
+        reaction.delete()
+
+    count = Reaction.objects.filter(dream=dream, emoji=emoji).count()
+    reacted = Reaction.objects.filter(
+        dream=dream,
+        user=request.user,
+        emoji=emoji
+    ).exists()
+
+    return JsonResponse({
+        "success": True,
+        "emoji": emoji,
+        "count": count,
+        "reacted": reacted,
+    })
