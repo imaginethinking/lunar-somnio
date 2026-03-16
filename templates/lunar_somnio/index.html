@@ -33,13 +33,13 @@
 
 
     <div class="container-fluid full-page mb-5">
-        <div class="box">
+        <div class="box fade-section">
             <img src="{% static "images/Logo3.png" %}" alt="Dream Feed" class="mb-4">
         </div>
 
         <div class="row">
             {% for dream in public_dreams %}
-                <div id="dream-{{ dream.id }}" class="col-12 col-md-6 col-lg-4 mb-4">
+                <div id="dream-{{ dream.id }}" class="col-12 col-md-6 col-lg-4 mb-4 fade-section">
                     <div class="box dream-bg d-flex justify-content-center" style="--bg-image: url('{% static "images/BG4.png" %}')">
                         <div class="card h-100 shadow-sm mx-auto w-100">
                             <div class="card-body">
@@ -50,7 +50,7 @@
                                 </p>
 
                                 <p class="card-text">
-                                    {{ dream.text|truncatechars:500 }}
+                                    {{ dream.text|truncatechars:80 }}
                                 </p>
 
                                 <p class="mb-2">
@@ -130,7 +130,7 @@
 {#                            Add button link to view the analysis here#}
                                 <div class="">
                                     <a href="{% url 'lunar_somnio:dream_analyzer' dream.id %}">
-                                        <button class="btn btn-sm btn-outline-dark">View Dream</button>
+                                        <button class="btn btn-sm btn-outline-dark">View Dream Analysis</button>
                                     </a>
                                 </div>
 
@@ -149,5 +149,6 @@
     </div>
 
     <script src="{% static 'js/dream_reaction.js' %}"></script>
+    <script src="{% static 'js/fade_scroll.js' %}"></script>
 
 {% endblock %}

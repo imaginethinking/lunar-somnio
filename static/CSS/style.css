@@ -355,3 +355,15 @@ input[type="range"]::-moz-range-thumb {
   white-space: nowrap;
   padding: 0.25rem 0.4rem;
 }
+
+/*dreams fading in/out on the index page*/
+.fade-section {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 2s ease, transform 2s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
