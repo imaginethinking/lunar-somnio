@@ -57,7 +57,7 @@ class Dream(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
-    emotion = models.ForeignKey(Emotion, on_delete=models.PROTECT, related_name="dreams", default=6)
+    emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
 
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -72,6 +72,9 @@ class Dream(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
 
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
 class Reaction(models.Model):
     EMOJI_CHOICES = (
         ("heart", "❤️"),
@@ -85,8 +88,8 @@ class Reaction(models.Model):
     class Meta:
         unique_together = ("user", "dream", "emoji")
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dream = models.ForeignKey(Dream, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reactions")
+    dream = models.ForeignKey(Dream, on_delete=models.CASCADE, related_name="reactions")
 
     emoji = models.CharField(max_length=20, choices=EMOJI_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -104,9 +107,6 @@ class DreamAnalysis(models.Model):
 class WeatherSnapshot(models.Model):
     dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
 
-    moonset = models.DateTimeField()
-    moonrise = models.DateTimeField()
     moon_phase = models.CharField(max_length=255)
     moon_illumination = models.IntegerField()
-    sunrise = models.DateTimeField()
-    sunset = models.DateTimeField()
+    location_name = models.CharField(max_length=255, blank=True, null=True)

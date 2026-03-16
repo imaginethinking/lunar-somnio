@@ -41,7 +41,7 @@
 
     <li class="nav-item">
         <a class="nav-link {% if request.resolver_match.url_name == 'dream_analyzer' %}active{% endif %}"
-           href="{% url 'lunar_somnio:dream_analyzer' 1 %}">
+           href="{% url 'lunar_somnio:latest_dream' %}">
            Dream Analyzer
         </a>
     </li>
@@ -60,7 +60,7 @@
 
             {% if request.user.userprofile.profile_pic %}
                 <img class="profilepic"
-                     src="{{ request.user.userprofile.profile_pic.url }}"
+                     src="{{ request.user.userprofile.profile_pic }}"
                      alt="Profile">
             {% else %}
                 <div class="profilepic profile-fallback">
@@ -105,7 +105,12 @@
     </nav>
  </header>
 
-
+ <!-- If no dreams yet and you try to click Dream Analyer -->
+ {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+{% endif %}
 
     <div class="container-fluid">
         <div class="row">
@@ -128,6 +133,7 @@
 
     <script src="{% static 'js/dream_trail.js' %}"></script>
 
+    {% block scripts %}{% endblock %}
 
 </body>
 

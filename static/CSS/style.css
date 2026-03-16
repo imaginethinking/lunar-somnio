@@ -112,13 +112,6 @@
   font-style: normal;
 }
 
-.dm-sans {
-  font-family: "DM Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 10px;
-  font-style: normal;
-}
-
 body {
     font-family: "Zalando Sans SemiExpanded", sans-serif;
     background-color: #f1f1f1;
@@ -170,67 +163,30 @@ body {
   font-size: 30px;
 }
 
-.titlestyle2 {
+/* Dream Analyzer Main Title */
+.da-maintitle {
   color: #242e82;
   font-size: 20px;
-  /* letter-spacing: 1px; */
   text-align: center;
 }
 
-.dream-card {
-  width: 333px;
-  height: 400px;
-  text-align: left;
-  align-items: start;
-}
-
+/* Body Text in Dream Analyzer */
 .dream-bodytext {
   font-size: 13px;
+  opacity: .8;
 }
 
-.emotions-card {
-  width: 333px;
-  height: 40px;
-  text-align: left;
-  align-items: start;
-  justify-content: center;
-}
-
-.dream-analyzer-titles {
+/* Titles in Dream Analyzer */
+.da-titles {
   font-size: 15px;
   text-align: left;
 }
 
-.weather-card {
-  width: 333px;
-  height: 178px;
-  text-align: left;
-  align-items: start;
-  justify-content: center;
-  font-style: italic;
-  opacity: .5;
-}
-
-.btn-d1 {
+/* Buttons in Dream Analyzer */
+.button1 {
   border-radius: 6px;
   background-color: #242e82;
-}
-
-
-.btn-d2 {
-  border-radius: 6px;
-  background-color: #242e82;
-  margin-right: 4px;
-}
-
-.analyzer-card {
-  width: 333px;
-  height: 125.5px;
-  text-align: left;
-  align-items: start;
-  justify-content: center;
-  font-style: italic;
-  opacity: .5;
+  color: #f1f1f1;
 }
 
 /*For rainbow trail*/
@@ -337,4 +293,50 @@ input[type="range"]::-moz-range-thumb {
   background: white;
   color: #7a7a7a;
   opacity: 1;
+}
+
+.reaction-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.reaction-bar form {
+  margin: 0;
+}
+
+.reaction-bar .btn {
+  width: 100%;
+  white-space: nowrap;
+  padding: 0.25rem 0.4rem;
+}
+
+/*dreams fading in/out on the index page*/
+.fade-section {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 2s ease, transform 2s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Emotion Tags */
+.emotion-tag {
+  background-color: #f1f1f1;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/* Emotions Selection Container */
+.select2-container {
+    width: 100% !important;
 }

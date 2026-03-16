@@ -22,7 +22,7 @@ class DreamCreateForm(forms.ModelForm):
     )
     class Meta:
         model = Dream
-        fields = ["title", "text", "emotion", "sleep_quality", "dreamed_at", "visibility", "lucidity", "nightmare", "recurring",
+        fields = ["title", "text", "emotions", "sleep_quality", "dreamed_at", "visibility", "lucidity", "nightmare", "recurring",
                   "colour"]
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
