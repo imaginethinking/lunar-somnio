@@ -211,4 +211,5 @@ def latest_dream(request):
     if dream:
         return redirect('lunar_somnio:dream_analyzer', id=dream.id)
     else:
+        messages.info(request, "You haven't recorded any dreams yet!")
         return redirect('lunar_somnio:index')

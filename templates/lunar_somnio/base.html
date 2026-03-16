@@ -105,7 +105,12 @@
     </nav>
  </header>
 
-
+ <!-- If no dreams yet and you try to click Dream Analyer -->
+ {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+{% endif %}
 
     <div class="container-fluid">
         <div class="row">
