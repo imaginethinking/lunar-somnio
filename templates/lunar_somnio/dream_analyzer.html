@@ -16,7 +16,7 @@
     <div class="col-4 px-2" >
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">
             <div class="card p-1 m-1">
-                <h5 class="da-titles mt-2 mx-2">What you wrote:</h5>
+                <h5 class="da-titles mt-2 mx-2">On {{ dream.dreamed_at|date:"F j, Y" }} you wrote:</h5>
                 <p class="dream-bodytext mx-2"><i>{{ dream.text }} </i></p>
             </div>
         </div>
@@ -39,15 +39,21 @@
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
             <div class="card">
                 <h5 class="da-titles mt-2 mx-2">You picked:</h5>
+                {% if emotions %}
                 <div class="d-flex flex-wrap gap-2 mb-1 ml-1">
                     {% for e in emotions %}
                         <span class="emotion-tag">{{ e.category|capfirst }}</span>
                     {% endfor %}
                 </div>
+                {% else %}
+                <div class="d-flex flex-wrap gap-2 ml-1"> 
+                    <p class="dream-bodytext ml-1 mt-1"><i>⚠️ You forgot to pick an emotion! ⚠️</i></p>
+                </div>
+                {% endif %}
             </div>
             
             <div class="card mt-3">
-                <h5 class="da-titles mt-2 mx-2">According to our data, this dream is predominantly related to: </h5>
+                <h5 class="da-titles mt-2 mx-2">According to our data, this dream may be predominantly related to: </h5>
                 <div class="d-flex flex-wrap gap-2 mb-1 ml-1">
                     {% for e in emotions %}
                         <!-- <span class="emotion-tag"> emotion analyzed goes here </span> -->
@@ -59,10 +65,36 @@
 
         <!-- Weather Card -->
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
+            {% if weather %}
             <div class="card">
-                <h5 class="da-titles mt-2 mx-2">The weather on:</h5>
-                <!-- REMOVE LATER, EXAMPLE --> <p class="dream-bodytext mx-2"> Weather goes here... </p>
+                <div class="d-flex align-items-center mx-2 my-2">
+                    <div class="flex-grow-1">
+                        <h5 class="da-titles mb-1">That night in {{ weather.location_name }}...</h5>
+                        <p class="dream-bodytext mb-0">The moon's phase was 
+                            <b>{{ weather.moon_phase }}</b> and it's illumination was 
+                            <b>{{ weather.moon_illumination }}%</b></p>
+                    </div>
+                    <div style="font-size: 4rem;" class="mr-1">
+                        {% if weather.moon_phase == "New Moon" %}🌑
+                        {% elif weather.moon_phase == "Waxing Crescent" %}🌒
+                        {% elif weather.moon_phase == "First Quarter" %}🌓
+                        {% elif weather.moon_phase == "Waxing Gibbous" %}🌔
+                        {% elif weather.moon_phase == "Full Moon" %}🌕
+                        {% elif weather.moon_phase == "Waning Gibbous" %}🌖
+                        {% elif weather.moon_phase == "Last Quarter" %}🌗
+                        {% elif weather.moon_phase == "Waning Crescent" %}🌘
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+            {% else %}
+            <div class="card">
+                <div class="d-flex align-items-center mx-2 my-2">
+                        <p class="dream-bodytext mb-1"><i>⚠️ There was an error with the location (or it wasn't authorized), so we couldn't retrieve the moon data. ⚠️</i></p> 
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
 
     </div>
@@ -84,18 +116,5 @@
             {% endif %}
         </div>
 </div>
-
-
-<!-- 
-<p> {{ weather.moonset }} </p>
-<p> {{ weather.moonrise }} </p>
-<p> {{ weather.moon_phase }} </p>
-<p> {{ weather.moon_illumination }} </p>
-<p> {{ weather.sunrise }} </p>
-<p> {{ weather.sunset }} </p> 
-//-->
-
-<p> {{ dream_analysis.top_emotion }} </p>
-<p> {{ dream_analysis.sentiment_score }} </p>
 
 {% endblock %}

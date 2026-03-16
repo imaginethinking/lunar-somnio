@@ -28,6 +28,12 @@
 
     <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
         {% csrf_token %}
+        <script>
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {document.getElementById('latitude').value = position.coords.latitude;
+                    document.getElementById('longitude').value = position.coords.longitude;});}
+        </script>
+
         {{ form.title.as_hidden }}
 
         {{ form.non_field_errors }}

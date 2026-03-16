@@ -41,7 +41,7 @@
 
     <li class="nav-item">
         <a class="nav-link {% if request.resolver_match.url_name == 'dream_analyzer' %}active{% endif %}"
-           href="{% url 'lunar_somnio:dream_analyzer' 1 %}">
+           href="{% url 'lunar_somnio:latest_dream' %}">
            Dream Analyzer
         </a>
     </li>

@@ -8,6 +8,8 @@ from .forms import DreamTitleForm, DreamCreateForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
+import requests
+
 
 
 # 必须加上这个 index 函数，否则服务器启动会崩溃
@@ -145,7 +147,27 @@ def upload_dream(request):
         if form.is_valid():
             dream = form.save(commit=False)
             dream.user = request.user
+            dream.latitude = request.POST.get('latitude')
+            dream.longitude = request.POST.get('longitude')
             dream.save()
+
+            response = requests.get('http://api.weatherapi.com/v1/history.json', params={
+                'key': 'f68f953a7cf64c22830231541261503',
+                'q': f"{dream.latitude},{dream.longitude}",
+                'dt': dream.dreamed_at.strftime('%Y-%m-%d')
+            })
+
+            data = response.json()
+            astro = data['forecast']['forecastday'][0]['astro']
+            location_name = data['location']['region'] or data['location']['name']
+            WeatherSnapshot.objects.create(
+                dream=dream,
+                moon_phase=astro['moon_phase'],
+                moon_illumination=astro['moon_illumination'],
+                location_name=location_name,
+            )
+
+            print(data['location'])
 
             form.save_m2m()
 
@@ -182,3 +204,11 @@ def edit_dream(request, id):
         form = DreamCreateForm(instance=dream)
 
     return render(request, "lunar_somnio/edit_dream.html", {"form": form, "dream": dream})
+
+@login_required
+def latest_dream(request):
+    dream = Dream.objects.filter(user=request.user).order_by('-created_at').first()
+    if dream:
+        return redirect('lunar_somnio:dream_analyzer', id=dream.id)
+    else:
+        return redirect('lunar_somnio:index')

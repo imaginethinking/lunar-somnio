@@ -77,12 +77,8 @@ class Migration(migrations.Migration):
             name='WeatherSnapshot',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('moonset', models.DateTimeField()),
-                ('moonrise', models.DateTimeField()),
                 ('moon_phase', models.CharField(max_length=255)),
                 ('moon_illumination', models.IntegerField()),
-                ('sunrise', models.DateTimeField()),
-                ('sunset', models.DateTimeField()),
                 ('dream', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='lunar_somnio.Dream')),
             ],
         ),

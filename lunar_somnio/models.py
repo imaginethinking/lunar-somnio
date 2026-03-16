@@ -55,8 +55,8 @@ class Dream(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
 
-    # latitude = models.FloatField(null=True, blank=True)
-    # longitude = models.FloatField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
 
 class Reaction(models.Model):
     EMOJI_CHOICES = (
@@ -105,9 +105,6 @@ class DreamAnalysis(models.Model):
 class WeatherSnapshot(models.Model):
     dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
 
-    moonset = models.DateTimeField()
-    moonrise = models.DateTimeField()
     moon_phase = models.CharField(max_length=255)
     moon_illumination = models.IntegerField()
-    sunrise = models.DateTimeField()
-    sunset = models.DateTimeField()
+    location_name = models.CharField(max_length=255, blank=True, null=True)
