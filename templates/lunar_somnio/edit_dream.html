@@ -26,14 +26,7 @@
         tell me more about <em>{{ form.title.value }}</em>...
     </h2>
 
-    <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
-        {% csrf_token %}
-        <script>
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;});}
-        </script>
-
+    <form method="post" action="{% url 'lunar_somnio:edit_dream' dream.id %}">        {% csrf_token %}
         {{ form.title.as_hidden }}
 
         {{ form.non_field_errors }}
@@ -93,7 +86,7 @@
 
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
-                    <div class="card p-2 m-1">
+                    <div class="card p-3 m-1">
                         <div class="form-check">
                             {{ form.nightmare }} Is this a <em>nightmare</em>
                         </div>
@@ -152,7 +145,7 @@
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
                     <button class="btn btn-block">
-                        <strong>Add to Journal</strong>
+                        <strong>Save to Journal</strong>
                     </button>
                 </div>
 

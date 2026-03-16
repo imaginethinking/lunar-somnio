@@ -14,4 +14,6 @@ urlpatterns = [
     path('profile/', views.user_profile, name='profile'),
     path('dream/<int:id>', views.dream_analyzer, name='dream_analyzer'),
     path("dream/<int:dream_id>/react/", views.react_to_dream, name="react_to_dream"),
+    path('dream/edit/<int:id>', views.edit_dream, name='edit_dream'),
+    path('dream/latest/', views.latest_dream, name='latest_dream'),
 ]
