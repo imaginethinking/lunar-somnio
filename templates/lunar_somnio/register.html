@@ -5,31 +5,33 @@
 
 {% block body_block %}
 <div class="full-page">
-    <div class="text-center">
+    
+    <div class="text-center mb-4">
         <img src="{% static 'images/Logo3.png' %}" alt="Lunar Somnio" style="max-width: 140px; margin-bottom: 10px;">
         <h1 class="font-weight-bold zalando-sans-semiexpanded" style="font-size: 2.2rem; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 0;">JOIN LUNAR SOMNIO</h1>
         <p class="text-muted" style="font-size: 0.9rem; margin-top: 4px;">Create your account to start analyzing dreams.</p>
     </div>
     
-    <div class="box mt-4" style="background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('{% static 'images/BG4.png' %}'); background-size: cover; width: 400px; padding: 30px; border-radius: 30px;">
+    <div class="box dream-bg mx-auto" style="--bg-image: url('{% static 'images/BG4.png' %}'); padding: 2px; border-radius: 20px; width: 400px; max-width: 100%;">
         
-        <div class="card p-4" style="background: white; border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <div class="card h-100 shadow-sm" style="border-radius: 18px; border: none; padding: 30px; background: white;">
             <form method="POST">
                 {% csrf_token %}
-                <input type="text" name="username" class="form-control dream-title-input mb-3" placeholder="Username" required style="font-size: 0.9rem; padding: 12px 20px;">
-                <input type="email" name="email" class="form-control dream-title-input mb-3" placeholder="Email Address" required style="font-size: 0.9rem; padding: 12px 20px;">
-                <input type="password" name="password" class="form-control dream-title-input mb-3" placeholder="Password" required style="font-size: 0.9rem; padding: 12px 20px;">
-                <input type="number" name="age" class="form-control dream-title-input mb-4" placeholder="Your Age" required style="font-size: 0.9rem; padding: 12px 20px;"> 
+                <input type="text" name="username" class="form-control dream-title-input mb-3" placeholder="Username" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
+                <input type="email" name="email" class="form-control dream-title-input mb-3" placeholder="Email Address" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
+                <input type="password" name="password" class="form-control dream-title-input mb-3" placeholder="Password" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
+                <input type="number" name="age" class="form-control dream-title-input mb-4" placeholder="Your Age" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;"> 
                 
-                <button type="submit" class="btn btn-block dream-title-input" style="background-color: #333; color: white; height: auto; padding: 12px; font-weight: 500; font-size: 1rem;">
+                <button type="submit" class="btn btn-block dream-title-input" style="background-color: #333; color: white; height: auto; padding: 12px; font-weight: 500; font-size: 1rem; border-radius: 10px;">
                     Create Account
                 </button>
             </form>
             
             <p class="small text-center mt-4 mb-0">
-                Already have an account? <a href="{% url 'lunar_somnio:login' %}" class="font-weight-bold text-dark">Log in.</a>
+                Already have an account? <a href="{% url 'lunar_somnio:login' %}" class="font-weight-bold text-dark" style="text-decoration: none;">Log in.</a>
             </p>
         </div>
+        
     </div>
 </div>
 {% endblock %}
