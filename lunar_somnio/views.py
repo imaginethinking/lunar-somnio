@@ -58,10 +58,19 @@ def register_view(request):
         pword = request.POST.get('password')
         age = request.POST.get('age')
         
-        # 创建账号并关联 Profile
-        user = User.objects.create_user(username=uname, email=email, password=pword)
-        UserProfile.objects.create(user=user, age=age, display_name=uname)
-        return redirect('lunar_somnio:login')
+        try:
+            # 创建账号并关联 Profile
+            user = User.objects.create_user(username=uname, email=email, password=pword)
+            UserProfile.objects.create(user=user, age=age, display_name=uname)
+            
+            # 【新增逻辑】发送成功提示，并重定向到登录页
+            messages.success(request, 'Account successfully created! You can now log in.')
+            return redirect('lunar_somnio:login')
+            
+        except Exception as e:
+            # 【新增逻辑】如果注册失败（例如用户名已存在），弹错并留在注册页
+            messages.error(request, 'Registration failed. Username might already be taken.')
+            
     return render(request, 'lunar_somnio/register.html')
 
 def logout_view(request):
