@@ -157,3 +157,28 @@ def upload_dream(request):
         form = DreamCreateForm(initial={"title": title})
 
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
+
+@login_required
+def edit_dream(request, id):
+
+    user = request.user
+    dream = Dream.objects.get(id=id,user=user)
+
+    if request.method == "POST":
+        form = DreamCreateForm(request.POST,instance=dream)
+
+        if form.is_valid():
+            dream = form.save(commit=False)
+            dream.user = request.user
+            dream.save()
+
+            form.save_m2m()
+
+            request.session.pop("dream_title", None)
+
+            return redirect("lunar_somnio:dream_analyzer", id=dream.id)
+    else:
+        title = request.session.get("dream_title")
+        form = DreamCreateForm(instance=dream)
+
+    return render(request, "lunar_somnio/edit_dream.html", {"form": form, "dream": dream})

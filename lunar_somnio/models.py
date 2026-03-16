@@ -55,8 +55,8 @@ class Dream(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
 
-    latitude = models.FloatField(null=True, blank=True)
-    longitude = models.FloatField(null=True, blank=True)
+    # latitude = models.FloatField(null=True, blank=True)
+    # longitude = models.FloatField(null=True, blank=True)
 
 class Reaction(models.Model):
     EMOJI_CHOICES = (

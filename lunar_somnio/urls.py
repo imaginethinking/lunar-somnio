@@ -13,4 +13,5 @@ urlpatterns = [
     path("dream/upload/", views.upload_dream, name='upload_dream'),
     path('profile/', views.user_profile, name='profile'),
     path('dream/<int:id>', views.dream_analyzer, name='dream_analyzer'),
+    path('dream/edit/<int:id>', views.edit_dream, name='edit_dream'),
 ]

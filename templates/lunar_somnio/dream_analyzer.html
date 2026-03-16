@@ -72,7 +72,7 @@
 <!-- Buttons at end -->
  
 <div class="d-flex justify-content-between px-4">
-    <a href="{% url 'lunar_somnio:login' %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button></a>
+    <a href="{% url 'lunar_somnio:edit_dream' dream.id  %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button></a>
         <div class="d-flex" style="margin-right: 16px">
             {% if prev_dream %}
             <a href="{% url 'lunar_somnio:dream_analyzer' prev_dream.id  %}"><button class="btn button1 dream-bg mx-2" style="--bg-image: url('{% static "images/BG75.png" %}')">

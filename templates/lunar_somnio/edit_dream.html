@@ -26,8 +26,7 @@
         tell me more about <em>{{ form.title.value }}</em>...
     </h2>
 
-    <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
-        {% csrf_token %}
+    <form method="post" action="{% url 'lunar_somnio:edit_dream' dream.id %}">        {% csrf_token %}
         {{ form.title.as_hidden }}
 
         {{ form.non_field_errors }}
@@ -146,7 +145,7 @@
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
                     <button class="btn btn-block">
-                        <strong>Add to Journal</strong>
+                        <strong>Save to Journal</strong>
                     </button>
                 </div>
 
