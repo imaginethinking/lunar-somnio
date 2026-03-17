@@ -137,3 +137,10 @@ REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = 'lunar_somnio:login'
 LOGIN_URL = 'lunar_somnio:login'
+
+# Deployment settings
+ALLOWED_HOSTS = [
+    'imaginethinking.eu.pythonanywhere.com',
+    '127.0.0.1',
+    'localhost',
+]
