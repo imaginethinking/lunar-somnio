@@ -1,6 +1,7 @@
 from django import forms
 from django.utils import timezone
-from .models import Dream
+from django.contrib.auth.models import User
+from .models import Dream, UserProfile
 
 class DreamTitleForm(forms.Form):
     title = forms.CharField(
@@ -71,3 +72,49 @@ class DreamCreateForm(forms.ModelForm):
         if dreamed_at and dreamed_at > timezone.now():
             raise forms.ValidationError("Dream date cannot be in the future.")
         return dreamed_at
+
+# Add UserForm for registration
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control dream-title-input mb-3',
+        'placeholder': 'Password',
+        'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+    }))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control dream-title-input mb-3',
+                'placeholder': 'Username',
+                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control dream-title-input mb-3',
+                'placeholder': 'Email Address',
+                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+            })
+        }
+
+# Add UserProfileForm for additional demographic data
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('display_name', 'gender', 'age')
+        widgets = {
+            'display_name': forms.TextInput(attrs={
+                'class': 'form-control dream-title-input mb-3',
+                'placeholder': 'Display Name (Public)',
+                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+            }),
+            'gender': forms.Select(attrs={
+                'class': 'form-control dream-title-input mb-4',
+                'style': 'font-size: 0.9rem; height: auto; padding: 12px 20px; background-color: #f8f9fa; border: none; color: #6c757d;'
+            }),
+            'age': forms.NumberInput(attrs={
+                'class': 'form-control dream-title-input mb-4',
+                'placeholder': 'Your Age',
+                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+            })
+        }
