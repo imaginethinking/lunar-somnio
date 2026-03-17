@@ -118,3 +118,16 @@ class UserProfileForm(forms.ModelForm):
                 'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
             })
         }
+
+# Add UserLoginForm for login view
+class UserLoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control dream-title-input mb-3',
+        'placeholder': 'Username',
+        'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control dream-title-input mb-4',
+        'placeholder': 'Password',
+        'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+    }))
