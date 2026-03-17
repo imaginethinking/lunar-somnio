@@ -79,7 +79,7 @@ def populate_users_and_dreams(num_users, dreams_per_user):
         "I opened a door in my house and found an entire ocean behind it.",
     ]
 
-    colours = ["#ffffff", "#cce5ff", "#ffd6e7", "#d4edda", "#fff3cd", "#e2d9f3"]
+    colours = ["#444444", "#f29ab5", "#7fb8ff", "#82d6a3", "#ffd36b", "#bfa3ff", "ff9aa2", "#7ed9c4"]
     visibility_choices = ["private", "public"]
 
     all_emotions = list(Emotion.objects.all())

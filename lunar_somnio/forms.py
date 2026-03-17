@@ -26,7 +26,11 @@ class DreamCreateForm(forms.ModelForm):
                   "colour"]
         widgets = {
             "title": forms.TextInput(attrs={"class": "form-control"}),
-            "text": forms.Textarea(attrs={"class": "form-control w-100", "rows": 10}),
+            "text": forms.Textarea(attrs={
+                "class": "form-control w-100",
+                "rows": 10,
+                "placeholder": "Describe your dream in as much detail as you can..."
+            }),
             "emotion": forms.Select(attrs={"class": "form-control"}),
             "sleep_quality": forms.NumberInput(attrs={
                 "class": "form-control-range",
@@ -50,8 +54,5 @@ class DreamCreateForm(forms.ModelForm):
             }),
             "nightmare": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "recurring": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "colour": forms.TextInput(attrs={
-                "class": "form-control",
-                "type": "color"
-            }),
+            "colour": forms.Select(attrs={"class": "form-control"}),
         }
