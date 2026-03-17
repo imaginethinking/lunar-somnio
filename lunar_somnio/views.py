@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis, Reaction
-from .models import UserProfile
 from django.contrib import messages
-from .forms import DreamTitleForm, DreamCreateForm
+from .forms import DreamTitleForm, DreamCreateForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
@@ -12,8 +11,7 @@ from django.http import JsonResponse
 import requests
 
 
-
-# 必须加上这个 index 函数，否则服务器启动会崩溃
+# Must include this index function, otherwise the server startup will crash
 def index(request):
     if request.method == "POST":
         form = DreamTitleForm(request.POST)
@@ -59,40 +57,55 @@ def index(request):
     return render(request, "lunar_somnio/index.html", context_dict)
 
 
+# Make sure UserLoginForm is imported at the top!
 def login_view(request):
     if request.method == 'POST':
-        uname = request.POST.get('username')
-        pword = request.POST.get('password')
-        user = authenticate(request, username=uname, password=pword)
-        if user:
-            login(request, user)
-            return redirect('lunar_somnio:index') 
-        else:
-            messages.error(request, "Invalid username or password.")
-    return render(request, 'lunar_somnio/login.html')
-
+        login_form = UserLoginForm(request.POST)
+        if login_form.is_valid():
+            uname = login_form.cleaned_data.get('username')
+            pword = login_form.cleaned_data.get('password')
+            user = authenticate(request, username=uname, password=pword)
+            if user:
+                login(request, user)
+                return redirect('lunar_somnio:index') 
+            else:
+                messages.error(request, "Invalid username or password.")
+    else:
+        # Initialize a blank form for GET requests
+        login_form = UserLoginForm()
+        
+    return render(request, 'lunar_somnio/login.html', {'login_form': login_form})
 
 def register_view(request):
     if request.method == 'POST':
-        uname = request.POST.get('username')
-        email = request.POST.get('email')
-        pword = request.POST.get('password')
-        age = request.POST.get('age')
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
         
-        try:
-            # 创建账号并关联 Profile
-            user = User.objects.create_user(username=uname, email=email, password=pword)
-            UserProfile.objects.create(user=user, age=age, display_name=uname)
-
-            # 【新增逻辑】发送成功提示，并重定向到登录页
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save the user's form data to the database securely
+            user = user_form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            
+            # Save the user profile data to the database
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            
             messages.success(request, 'Account successfully created! You can now log in.')
             return redirect('lunar_somnio:login')
-
-        except Exception as e:
-            # 【新增逻辑】如果注册失败（例如用户名已存在），弹错并留在注册页
-            messages.error(request, 'Registration failed. Username might already be taken.')
-
-    return render(request, 'lunar_somnio/register.html')
+        else:
+            messages.error(request, 'Registration failed. Please check your inputs.')
+            
+    else:
+        # Not a HTTP POST, so we render our form using two ModelForm instances
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        
+    return render(request, 'lunar_somnio/register.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
 
 
 def logout_view(request):
