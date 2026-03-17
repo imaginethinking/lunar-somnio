@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis, Reaction
 from django.contrib import messages
-from .forms import DreamTitleForm, DreamCreateForm, UserForm, UserProfileForm
+from .forms import DreamTitleForm, DreamCreateForm, UserForm, UserProfileForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
@@ -57,7 +57,6 @@ def index(request):
     return render(request, "lunar_somnio/index.html", context_dict)
 
 
-# Make sure UserLoginForm is imported at the top!
 def login_view(request):
     if request.method == 'POST':
         login_form = UserLoginForm(request.POST)
@@ -75,6 +74,7 @@ def login_view(request):
         login_form = UserLoginForm()
         
     return render(request, 'lunar_somnio/login.html', {'login_form': login_form})
+
 
 def register_view(request):
     if request.method == 'POST':
