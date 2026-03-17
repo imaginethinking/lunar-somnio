@@ -99,6 +99,25 @@ class UserForm(forms.ModelForm):
 
 # Add UserProfileForm for additional demographic data
 class UserProfileForm(forms.ModelForm):
+    # Define the choices for the gender dropdown
+    GENDER_CHOICES = [
+        ('', 'Gender'), # Placeholder
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Non-binary', 'Non-binary'),
+        ('Other', 'Other'),
+    ]
+
+    # Explicitly define the gender field as a ChoiceField
+    gender = forms.ChoiceField(
+        choices=GENDER_CHOICES,
+        required=True,
+        widget=forms.Select(attrs={
+            'class': 'form-control dream-title-input mb-4',
+            'style': 'font-size: 0.9rem; height: auto; padding: 12px 20px; background-color: #f8f9fa; border: none; color: #6c757d;'
+        })
+    )
+
     class Meta:
         model = UserProfile
         fields = ('display_name', 'gender', 'age')
@@ -107,10 +126,6 @@ class UserProfileForm(forms.ModelForm):
                 'class': 'form-control dream-title-input mb-3',
                 'placeholder': 'Display Name (Public)',
                 'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
-            }),
-            'gender': forms.Select(attrs={
-                'class': 'form-control dream-title-input mb-4',
-                'style': 'font-size: 0.9rem; height: auto; padding: 12px 20px; background-color: #f8f9fa; border: none; color: #6c757d;'
             }),
             'age': forms.NumberInput(attrs={
                 'class': 'form-control dream-title-input mb-4',

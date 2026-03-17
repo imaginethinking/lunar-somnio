@@ -27,24 +27,18 @@
             <form method="POST">
                 {% csrf_token %}
                 
-                <input type="text" name="username" class="form-control dream-title-input mb-3" placeholder="Username" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
-                <input type="email" name="email" class="form-control dream-title-input mb-3" placeholder="Email Address" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
-                <input type="password" name="password" class="form-control dream-title-input mb-3" placeholder="Password" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
+                {{ user_form.username }}
+                {{ user_form.email }}
+                {{ user_form.password }}
                 
-                <input type="text" name="display_name" class="form-control dream-title-input mb-3" placeholder="Display Name (Public)" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;">
+                {{ profile_form.display_name }}
 
                 <div class="row">
                     <div class="col-6 pr-2">
-                        <select name="gender" class="form-control dream-title-input mb-4" required style="font-size: 0.9rem; height: auto; padding: 12px 20px; background-color: #f8f9fa; border: none; color: #6c757d;">
-                            <option value="" disabled selected>Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Non-binary">Non-binary</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        {{ profile_form.gender }}
                     </div>
                     <div class="col-6 pl-2">
-                        <input type="number" name="age" class="form-control dream-title-input mb-4" placeholder="Your Age" required style="font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;"> 
+                        {{ profile_form.age }}
                     </div>
                 </div>
                 
