@@ -1,4 +1,5 @@
 from django import forms
+from django.utils import timezone
 from .models import Dream
 
 class DreamTitleForm(forms.Form):
@@ -31,7 +32,7 @@ class DreamCreateForm(forms.ModelForm):
                 "rows": 10,
                 "placeholder": "Describe your dream in as much detail as you can..."
             }),
-            "emotion": forms.Select(attrs={"class": "form-control"}),
+            "emotions": forms.SelectMultiple(attrs={"class": "form-control"}),
             "sleep_quality": forms.NumberInput(attrs={
                 "class": "form-control-range",
                 "type": "range",
@@ -56,3 +57,17 @@ class DreamCreateForm(forms.ModelForm):
             "recurring": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "colour": forms.Select(attrs={"class": "form-control"}),
         }
+
+    # Validates that at least one emotion is selected for a dream
+    def clean_emotions(self):
+        emotions = self.cleaned_data.get("emotions")
+        if not emotions or len(emotions) == 0:
+            raise forms.ValidationError("Please select at least one emotion.")
+        return emotions
+
+    # Validates that the time dreamed is not at a future time or date
+    def clean_dreamed_at(self):
+        dreamed_at = self.cleaned_data.get("dreamed_at")
+        if dreamed_at and dreamed_at > timezone.now():
+            raise forms.ValidationError("Dream date cannot be in the future.")
+        return dreamed_at

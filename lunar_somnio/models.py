@@ -68,7 +68,7 @@ class Dream(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
-    emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
+    emotions = models.ManyToManyField("Emotion", related_name="dreams")
 
     title = models.CharField(max_length=255)
     text = models.TextField()
