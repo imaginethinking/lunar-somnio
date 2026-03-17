@@ -17,11 +17,6 @@
 
     <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
         {% csrf_token %}
-        <script>
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;});}
-        </script>
 
         {{ form.title.as_hidden }}
 
@@ -169,4 +164,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{% static 'js/dream_emotions_select.js' %}"></script>
+    <script src="{% static 'js/position_locator.js' %}"></script>
 {% endblock %}
