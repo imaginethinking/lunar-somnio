@@ -131,17 +131,10 @@ body {
 
 .userpic {
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   object-fit: cover;
   border: 1.4px solid #f1f1f1;
-}
-
-.titlestyle {
-  color: #242e82;
-  font-size: 20px;
-  /* letter-spacing: 1px; */
-  text-align: center;
 }
 
 .bio-card {
@@ -161,6 +154,14 @@ body {
 
 .big-num {
   font-size: 30px;
+  text-align: center;
+  color: black;
+}
+
+.profile-subtitles {
+  color: darkgray;
+  font-style: italic;
+  font-size: 13px;
 }
 
 /* Dream Analyzer Main Title */
@@ -180,6 +181,11 @@ body {
 .da-titles {
   font-size: 15px;
   text-align: left;
+}
+
+/* Dream Link in Profile Page */
+.dream-link {
+  color: #0b4c63;
 }
 
 /* Buttons in Dream Analyzer */
@@ -204,6 +210,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+
 
 .slider-card {
   background: #ffffff;
@@ -348,4 +355,9 @@ input[type="range"]::-moz-range-thumb {
   transform: translate(-50%, -50%);
   border-radius: 50%;
   filter: none;
+}
+
+.username {
+  color: darkgray;
+  font-style: italic;
 }
