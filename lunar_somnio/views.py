@@ -152,6 +152,47 @@ def user_profile(request):
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
 
+EMOTION_KEYWORDS = {
+    'anger': ['angry', 'rage', 'furious', 'mad', 'hate', 'yell', 'fight', 'violent', 
+              'scream', 'attack', 'punch', 'hit', 'frustrat', 'annoy', 'resent', 
+              'bitter', 'hostile', 'aggressive', 'explode', 'revenge'],
+
+    'disgust': ['disgusting', 'gross', 'sick', 'vomit', 'dirty', 'ugly', 'horrible',
+                'nasty', 'revolting', 'filthy', 'stink', 'rot', 'decay', 'trash',
+                'repuls', 'awful', 'disturbing', 'nauseating', 'yuck', 'creepy'],
+
+    'fear': ['scared', 'afraid', 'terror', 'nightmare', 'monster', 'dark', 'run',
+             'chase', 'hiding', 'panic', 'danger', 'threat', 'scream', 'trap',
+             'escape', 'ghost', 'shadow', 'lost', 'alone', 'horror', 'dread',
+             'anxiety', 'helpless', 'frozen', 'paralyz', 'evil', 'demon'],
+
+    'happiness': ['happy', 'joy', 'laugh', 'smile', 'love', 'fun', 'excited', 'celebrate',
+                  'wonderful', 'amazing', 'beautiful', 'warm', 'hug', 'peace', 'free',
+                  'flying', 'dance', 'music', 'friend', 'family', 'sunshine', 'bright',
+                  'paradise', 'perfect', 'bliss', 'delight', 'content', 'grateful'],
+
+    'sadness': ['sad', 'cry', 'loss', 'miss', 'grief', 'lonely', 'tears', 'hurt',
+                'broken', 'empty', 'hopeless', 'depress', 'mourn', 'goodbye', 'death',
+                'dead', 'die', 'regret', 'disappoint', 'forget', 'left', 'abandon',
+                'reject', 'fail', 'lose', 'gone', 'never', 'wish'],
+
+    'neutral': ['walk', 'talk', 'sit', 'stand', 'look', 'see', 'hear', 'think',
+                'normal', 'ordinary', 'usual', 'everyday', 'just', 'simply'],
+}
+
+def get_top_emotion(text):
+    text_lowercase = text.lower()
+    emotion_scores = {emotion: 0 for emotion in EMOTION_KEYWORDS}
+
+    for emotion, keywords in EMOTION_KEYWORDS.items():
+        for word in keywords:
+            if word in text_lowercase:
+                emotion_scores[emotion] += 1
+    
+    top = max(emotion_scores, key=emotion_scores.get)
+
+    return top if emotion_scores[top] > 0 else 'neutral'
+
 
 @login_required
 def dream_analyzer(request, id):
@@ -161,6 +202,7 @@ def dream_analyzer(request, id):
         user_profile = UserProfile.objects.get(user=user)
         dream = Dream.objects.get(id=id,user=user)
         emotions = dream.emotions.all()
+        top_emotion = get_top_emotion(dream.text)
 
         next_dream = Dream.objects.filter(user=user, id=dream.id+1).first()
         prev_dream = Dream.objects.filter(user=user, id=dream.id-1).first()
@@ -183,6 +225,7 @@ def dream_analyzer(request, id):
             'next_dream': next_dream,
             'prev_dream': prev_dream,
             'user_profile': user_profile,
+            'top_emotion': top_emotion,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
