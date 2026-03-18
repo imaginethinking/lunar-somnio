@@ -120,7 +120,10 @@ def user_profile(request):
 
     user_profile = UserProfile.objects.get(user=user)
     total_dreams = Dream.objects.filter(user=user).count()
-    avg_sq = Dream.objects.filter(user=user).aggregate(Avg('sleep_quality'))
+    avg_sq_raw = Dream.objects.filter(user=user).aggregate(Avg('sleep_quality'))['sleep_quality__avg']
+    avg_sq_percent = round(avg_sq_raw * 20, 1) if avg_sq_raw else 0
+
+    avg_ld = Dream.objects.filter(user=user).aggregate(Avg('lucidity'))
     recent_dream = Dream.objects.filter(user=user).order_by('-dreamed_at').first()
     total_nightmares = Dream.objects.filter(user=user, nightmare=True).count()
     total_recurring = Dream.objects.filter(user=user, recurring=True).count()
@@ -137,13 +140,14 @@ def user_profile(request):
     context_dict = {
         'user_profile': user_profile,
         'total_dreams': total_dreams,
-        'avg_sq': avg_sq,
+        'avg_sq_percent': avg_sq_percent,
         'recent_dream': recent_dream,
         'top_month': top_month,
         'top_emotions': top_emotions,
         'total_nightmares': total_nightmares,
         'total_recurring': total_recurring,
         'emotions_data': emotions_data,
+        'avg_ld': avg_ld,
     }
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
