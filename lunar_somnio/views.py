@@ -100,6 +100,7 @@ def dream_analyzer(request, id):
 
         user = request.user
 
+        user_profile = UserProfile.objects.get(user=user)
         dream = Dream.objects.get(id=id,user=user)
         emotions = dream.emotions.all()
 
@@ -123,6 +124,7 @@ def dream_analyzer(request, id):
             'emotions': emotions,
             'next_dream': next_dream,
             'prev_dream': prev_dream,
+            'user_profile': user_profile,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)

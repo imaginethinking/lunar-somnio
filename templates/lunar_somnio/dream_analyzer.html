@@ -13,21 +13,11 @@
 <div class="row g-2 px-5">
 
     <!-- First column --> 
-    <div class="col-4 px-2" >
+    <div class="col-8 px-2" >
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">
             <div class="card p-1 m-1">
-                <h5 class="da-titles mt-2 mx-2">On {{ dream.dreamed_at|date:"F j, Y" }} you wrote:</h5>
+                <h5 class="da-titles mt-2 mx-2">On {{ dream.dreamed_at|date:"F j, Y" }}, {{ user_profile.first_name }} wrote:</h5>
                 <p class="dream-bodytext mx-2"><i>{{ dream.text }} </i></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Second column -->
-   <div class="col-4 px-2">
-        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">                            
-            <div class="card">
-                <h5 class="da-titles mt-2 mx-2">According to our analysis, your dream could mean...</h5>
-                <p class="dream-bodytext mx-2">Analysis Number 1 goes here...</p>
             </div>
         </div>
     </div>
