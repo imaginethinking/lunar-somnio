@@ -113,7 +113,6 @@
                             Dream <em>colour</em>
                         </div>
                         <div>
-                            {{ form.colour.label_tag }}
                             <select name="colour" id="{{ form.colour.id_for_label }}" class="form-control">
                                 {% for value, label in form.fields.colour.choices %}
                                     <option value="{{ value }}" style="color: {{ value }};">
