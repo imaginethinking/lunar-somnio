@@ -9,6 +9,7 @@ from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
 import requests
+import json
 
 
 # Must include this index function, otherwise the server startup will crash
@@ -121,19 +122,29 @@ def user_profile(request):
     total_dreams = Dream.objects.filter(user=user).count()
     avg_sq = Dream.objects.filter(user=user).aggregate(Avg('sleep_quality'))
     recent_dream = Dream.objects.filter(user=user).order_by('-dreamed_at').first()
+    total_nightmares = Dream.objects.filter(user=user, nightmare=True).count()
+    total_recurring = Dream.objects.filter(user=user, recurring=True).count()
 
     top_month = (Dream.objects.filter(user=user).annotate(month=TruncMonth('dreamed_at')).values('month')
                               .annotate(count=Count('id')).order_by('-count').first())
 
     top_emotions = (Emotion.objects.filter(dreams__user=user).annotate(count=Count('dreams')).order_by('-count')[:5])
+    emotions_data = json.dumps({
+    'labels': [e.get_category_display() for e in top_emotions],
+    'counts': [e.count for e in top_emotions],
+        })
 
-    context_dict = {}
-    context_dict['user_profile'] = user_profile
-    context_dict['total_dreams'] = total_dreams
-    context_dict['avg_sq'] = avg_sq
-    context_dict['recent_dream'] = recent_dream
-    context_dict['top_month'] = top_month
-    context_dict['top_emotions'] = top_emotions
+    context_dict = {
+        'user_profile': user_profile,
+        'total_dreams': total_dreams,
+        'avg_sq': avg_sq,
+        'recent_dream': recent_dream,
+        'top_month': top_month,
+        'top_emotions': top_emotions,
+        'total_nightmares': total_nightmares,
+        'total_recurring': total_recurring,
+        'emotions_data': emotions_data,
+    }
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
 

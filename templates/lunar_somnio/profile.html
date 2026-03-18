@@ -64,24 +64,56 @@
         <p class="da-maintitle mx-2"><i>This past year...</i></p>
 
         <!-- First Row of Dreams & Sleep Quality  -->
-        <div class="row g-2 align-items-stretch">
+        <div class="row align-items-stretch">
 
             <!-- Total Dreams Card  -->
-            <div class="box dream-bg mb-3 col h-100" style="--bg-image: url('{% static "images/BG25.png" %}')">
-                <div class="card h-100">
+            <div class="box dream-bg mb-3 col-4" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                <div class="card">
                     <p class="profile-subtitles text-center py-2">You've registered</p>
                     <h5 class="card-text big-num">{{ total_dreams }}</h5>
-                    <p class="profile-subtitles text-center">dreams in your journal</p> 
+                    <p class="profile-subtitles text-center px-2 mb-2">dreams in your journal</p> 
                 </div>
             </div>
 
-            <!--- Average Sleep Quality Card-->
-            <div class="box dream-bg mb-3 ml-3 col" style="--bg-image: url('{% static "images/BG25.png" %}'); min-height: 150px;">
-                <div class="card" style="height: 95%;">
-                    <p class="profile-subtitles text-center py-2">Your average sleep quality is:</p>
-                    <h5 class="card-text big-num">{{ avg_sq.sleep_quality__avg }}</h5>
+            <!-- Mini Column -->
+            <div class="col-8">
+
+                <!--- Card-->
+                <div class="box dream-bg mb-3 ml-1" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card ">
+                        {% if total_nightmares != 1 %}
+                        <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_nightmares }}</b> of those where nightmares</p>
+                        {% else %}
+                        <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_nightmares }}</b> of those was a nightmare</p>
+                        {% endif %}
+                    </div>
                 </div>
+
+                <!--- Card-->
+                <div class="box dream-bg ml-1" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card">
+                        {% if total_recurring != 1 %}
+                        <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_recurring }}</b> of those where recurring dreams</p>
+                        {% else %}
+                        <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_recurring }}</b> of those was a recurring dreams</p>
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
+
+        </div>
+
+        <!-- Temporal Row (Sleep Quality, Lucidity)-->
+        <div class="row g-2">
+
+            <!--- Average Sleep Quality Card-->
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}');">
+                    <div class="card">
+                        <p class="profile-subtitles text-center py-2">Your average sleep quality is:</p>
+                        <h5 class="card-text big-num">{{ avg_sq.sleep_quality__avg }}</h5>
+                    </div>
+                </div>
 
         </div>
 
@@ -91,7 +123,7 @@
             <!-- Top Month Card -->
             <div class="box dream-bg mb-3 col" style="--bg-image: url('{% static "images/BG25.png" %}')">
                 <div class="card card-centered col">
-                        <p class="card-title profile-text-1">Top Month:</p>
+                        <p class="card-title profile-subtitles">Top Month:</p>
                         {% if top_month %}
                         <h5 class="card-text">{{ top_month.month|date:"F" }}</h5>    
                         {% else %}
@@ -102,7 +134,7 @@
             <!-- Top Emotions Card -->
             <div class="box dream-bg mb-3 col" style="--bg-image: url('{% static "images/BG25.png" %}')">
                 <div class="card card-centered col">
-                        <p class="card-title profile-text-1">Top Emotions:</p>
+                        <p class="card-title profile-subtitles">Top Emotions:</p>
                         {% if top_emotions %}
                             {% for e in top_emotions %}
                             <h5 class="card-text">{{ e.name }}</h5>       
