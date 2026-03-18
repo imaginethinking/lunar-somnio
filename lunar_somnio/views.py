@@ -11,7 +11,7 @@ from django.http import JsonResponse
 import requests
 
 
-# Must include this index function, otherwise the server startup will crash
+# Renders the home page, handles quick dream title submission, and fetches public dreams with reactions
 def index(request):
     if request.method == "POST":
         form = DreamTitleForm(request.POST)
@@ -57,6 +57,7 @@ def index(request):
     return render(request, "lunar_somnio/index.html", context_dict)
 
 
+# Handles user authentication and login functionality
 def login_view(request):
     if request.method == 'POST':
         login_form = UserLoginForm(request.POST)
@@ -76,6 +77,7 @@ def login_view(request):
     return render(request, 'lunar_somnio/login.html', {'login_form': login_form})
 
 
+# Handles new user registration, creating both User and UserProfile records
 def register_view(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -108,11 +110,13 @@ def register_view(request):
     })
 
 
+# Logs out the current user and redirects to the login page
 def logout_view(request):
     logout(request)
     return redirect('lunar_somnio:login')
 
 
+# Displays user statistics, recent dreams, and top emotions
 @login_required
 def user_profile(request):
     user = request.user
@@ -138,6 +142,7 @@ def user_profile(request):
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
 
 
+# Displays detailed analysis, weather data, and emotions for a specific dream
 @login_required
 def dream_analyzer(request, id):
 
@@ -171,6 +176,7 @@ def dream_analyzer(request, id):
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
 
 
+# Renders the form to create a new dream entry
 @login_required
 def create_dream(request):
     title = request.session.get("dream_title")
@@ -183,6 +189,7 @@ def create_dream(request):
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
 
 
+# Processes new dream submissions and fetches external weather data
 @login_required
 def upload_dream(request):
     if request.method == "POST":
@@ -225,6 +232,7 @@ def upload_dream(request):
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
 
 
+# Handles AJAX requests for adding or removing emoji reactions on public dreams
 @login_required
 def react_to_dream(request, dream_id):
     if request.method != "POST":
@@ -256,6 +264,8 @@ def react_to_dream(request, dream_id):
         "reacted": reacted,
     })
 
+
+# Allows users to modify their existing dream entries
 @login_required
 def edit_dream(request, id):
 
@@ -281,6 +291,8 @@ def edit_dream(request, id):
 
     return render(request, "lunar_somnio/edit_dream.html", {"form": form, "dream": dream})
 
+
+# Redirects the user to their most recently logged dream
 @login_required
 def latest_dream(request):
     dream = Dream.objects.filter(user=request.user).order_by('-created_at').first()
