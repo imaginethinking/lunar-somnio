@@ -358,3 +358,10 @@ input[type="range"]::-moz-range-thumb {
   height: 50%;
   object-fit: cover;
 }
+
+.profile-backuptext {
+  color: darkgray;
+  font-style: italic;
+  font-size: 10px;
+  margin-top: 5%;
+}
