@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from .models import Dream, UserProfile
 
+# Form for capturing the initial dream title on the index page
 class DreamTitleForm(forms.Form):
     title = forms.CharField(
         max_length=255,
@@ -11,6 +12,7 @@ class DreamTitleForm(forms.Form):
         )
     )
 
+# Main form for detailed dream entry creation
 class DreamCreateForm(forms.ModelForm):
     dreamed_at = forms.DateTimeField(
         input_formats=["%Y-%m-%dT%H:%M"],
@@ -73,7 +75,7 @@ class DreamCreateForm(forms.ModelForm):
             raise forms.ValidationError("Dream date cannot be in the future.")
         return dreamed_at
 
-# Add UserForm for registration
+# Core user registration form mapping to Django's built-in User model
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control dream-title-input mb-3',
@@ -97,7 +99,7 @@ class UserForm(forms.ModelForm):
             })
         }
 
-# Add UserProfileForm for additional demographic data
+# Extended registration form for custom demographic data
 class UserProfileForm(forms.ModelForm):
     # Define the choices for the gender dropdown
     GENDER_CHOICES = [
@@ -134,7 +136,7 @@ class UserProfileForm(forms.ModelForm):
             })
         }
 
-# Add UserLoginForm for login view
+# Custom login form to maintain UI styling
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control dream-title-input mb-3',
