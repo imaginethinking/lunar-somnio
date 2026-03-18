@@ -126,7 +126,7 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             'display_name': forms.TextInput(attrs={
                 'class': 'form-control dream-title-input mb-3',
-                'placeholder': 'Display Name (Public)',
+                'placeholder': 'Username',
                 'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
             }),
             'age': forms.NumberInput(attrs={

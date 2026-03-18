@@ -7,113 +7,186 @@
 
 {% block body_block %}
 
-<div class="row">
+<!-- For the emotions chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="col-6">
-        
-            <div class="card card-centered">
-                <div class="card-body d-flex justify-content-start">
-                    <img class="userpic" src='{{ user_profile.profile_pic }}'>
-                    <div class="d-flex flex-column">
-                         <div class="p-2 m-3">@{{ user_profile.display_name }}</div>
-                         <div>
-                            <h5 class="card-text d-flex">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>
-                         </div>
-                    </div>
+<!-- Main Row -->
+<div class="row g-2 p-5">
+
+    <!-- Left Column -->
+    <div class="col-5">
+     
+        <!-- Profile Name & Image Card -->
+        <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}');">
+            <div class="card d-flex flex-row align-items-center p-2">
+                <img class="userpic" src='{{ user_profile.profile_pic }}'>
+                <div>    
+                    <p class="mb-0 ml-2 username">@{{ user_profile.display_name }}</p>
+                    <h5 class="card-text ml-2">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>    
+                    <p class="dream-bodytext mb-0 ml-2" style="margin-top: -8px;">{{ user_profile.bio }}</p>
                 </div>
             </div>
+        </div>
 
-            <div class="row m-0">
-                <div class="card card-centered col">
-                        <div class="card-body">
-                            <h5 class="card-text">{{ user_profile.country }}</h5>
-                        </div>
+        <!-- Mini Row on Left Column (Country, Gender, Age)-->
+        <div class="row m-0">
+            <div class="box d-flex dream-bg mb-3 col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                <div class="card col py-2">
+                    <p class="card-text text-center">{{ user_profile.country }}</p>
                 </div>
 
-                <div class="card card-centered col">
-                        <div class="card-body">
-                            <h5 class="card-text">{{ user_profile.gender }}</h5>
-                        </div>
+                <div class="card col py-2">
+                    <p class="card-text text-center">{{ user_profile.gender }}</p>
                 </div>
 
-                <div class="card card-centered col">
-                        <div class="card-body">
-                            <h5 class="card-text">{{ user_profile.age }}</h5>
-                        </div>
+                <div class="card col py-2">
+                    <p class="card-text text-center">{{ user_profile.age }} years old</p>
                 </div>
             </div>
-            
-            <div class="card card-centered bio-card">
-                <div class="card-body">
-                    <h5 class="card-text bio-text">{{ user_profile.bio }}</h5>
-                </div>
+        </div>
+
+        <!-- Most Recent Dream w Link -->
+        <div class="box d-flex dream-bg mb-3 col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
+            <div class="card col py-2">
+                <p class="profile-subtitles mb-0"> On {{ recent_dream.dreamed_at|date:"F j, Y" }}, you recorded your latest dream entry:</p>
+                {% if recent_dream %}
+                    <a href="{% url 'lunar_somnio:latest_dream' %}">
+                    <h5 class="card-text dream-link">{{ recent_dream.title }}</h5>
+                    </a>
+                {% else %}
+                    <h5 class="card-text">No dreams yet!</h5>
+                {% endif %}
             </div>
+        </div> 
+
+        <div class="d-flex justify-content-start">
+        <a href="{% url 'lunar_somnio:edit_profile' %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG50.png" %}')">Edit Profile</button></a>
+        </div>
+
+     <!-- End of Left Column -->
     </div>
 
-    <div class="col-6">
+    <!-- Right Column -->
+    <div class="col-7">
 
-        <p class="titlestyle mb-1"> This past year...</p>
+        <!-- Column Title -->
+        <div class="row mr-0">
+            <div class="box dream-bg mb-3 col-12" style="--bg-image: url('{% static "images/BG50.png" %}');">
+                <p class="da-maintitle mb-0 text-center" style="color: white"><i>This past year...</i></p>
+            </div>
+        </div>
 
-        <div class="row justify-content-end">
+        <!-- First Row Right Side (Dreams, Nightmares, Recurring Dreams)  -->
+        <div class="row align-items-stretch">
 
-            <div class="card card-centered col">
-                <div class="card-body">
-                    <p class="card-title profile-text-1">You've registered</p>
+            <!-- Total Dreams Card  -->
+            <div class="box dream-bg mb-3 col-4" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                <div class="card pb-3">
+                    <p class="profile-subtitles text-center pt-4">You've recorded</p>
                     <h5 class="card-text big-num">{{ total_dreams }}</h5>
-                    <p class="card-title profile-text-1">dreams in your journal</p>
+                    <p class="profile-subtitles text-center px-2 mb-2">dreams in your journal</p> 
                 </div>
             </div>
 
-            <div class="card card-centered col">
-                <div class="card-body">
-                    <p class="card-title profile-text-1">Your average sleep quality is:</p>
-                    <h5 class="card-text big-num">{{ avg_sq.sleep_quality__avg }}</h5>
+            <!-- Mini Column (Total Recurring Dreams, Total Nightmares )-->
+            <div class="col-8">
+
+                <!--- Total Nightmares Card-->
+                <div class="box dream-bg mb-3 ml-1" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card ">
+                        {% if total_nightmares != 1 %}
+                            <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_nightmares }}</b> of those where nightmares</p>
+                        {% else %}
+                            <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_nightmares }}</b> of those was a nightmare</p>
+                        {% endif %}
+                    </div>
                 </div>
+
+                <!--- Total Recurring Dreams Card-->
+                <div class="box dream-bg mb-3 ml-1" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card">
+                        {% if total_recurring != 1 %}
+                            <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_recurring }}</b> of those where recurring dreams</p>
+                        {% else %}
+                            <p class="profile-subtitles text-center mb-0 py-2"> <b>{{ total_recurring }}</b> of those was a recurring dreams</p>
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
-        <div class="row justify-content-end">
+        <!-- Second Row on Right side -->
+        <div class="row g-2 align-items-stretch">
 
-            <div class="card card-centered col">
-                <div class="card-body">
-                    {% if recent_dream %}
-                        <p class="card-title profile-text-1">Recent Dream:</p>
-                        <h5 class="card-text">{{ recent_dream.title }}</h5>
-                    {% else %}
-                        <p class="card-title profile-text-1">Recent Dream:</p>
-                        <h5 class="card-text">No dreams yet!</h5>
-                    {% endif %}
+            <!-- Mini Column (Top Month, Sleep Quality, Lucidity)-->
+            <div class="col-5 pl-0 pr-1">
+
+                <!-- Top Month Card -->
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card">
+                        <p class="profile-subtitles text-center pt-2 mb-0 mt-2">The month you dreamed the most:</p>
+                        {% if top_month %}
+                            <h5 class="card-text text-center mb-1 pb-2">{{ top_month.month|date:"F" }}</h5>    
+                        {% else %}
+                            <h5 class="card-text">No dreams yet!</h5>                    
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!--- Average Sleep Quality Percentage Card-->
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}');">
+                    <div class="card">
+                        <p class="profile-subtitles text-center py-2">Your average sleep quality is:</p>
+                        <h5 class="card-text big-num mb-1">{{ avg_sq_percent|floatformat:0 }}%</h5>
+                    </div>
+                </div>
+
+                <!--- Average Lucidity Card-->
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}');">
+                    <div class="card">
+                        <p class="profile-subtitles text-center py-2">Your average lucidity is:</p>
+                        <h5 class="card-text big-num mb-1">{{ avg_ld.lucidity__avg }}</h5>
+                    </div>
+                </div>
+                  
+            </div> 
+
+            <!-- Top Emotions Chart Card -->
+            <div class="col-7">
+                <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}')">
+                    <div class="card">
+                        <p class="profile-subtitles text-center pt-2 mb-0">The emotions you feel most in your dreams:</p>
+                        {% if top_emotions %}
+                            <div class="d-flex justify-content-center mb-2">
+                                <canvas id="emotionsChart" style="max-width: 250px; max-height: 250px;"></canvas>
+                                <script>
+                                    const data = {{ emotions_data|safe }};
+                                    new Chart(document.getElementById('emotionsChart'), {
+                                    type: 'doughnut',
+                                        data: {
+                                            labels: data.labels,
+                                            datasets: [{
+                                                data: data.counts,
+                                                backgroundColor: ['#6e61bc', '#054460', '#ad325f', '#e6675d'],
+                                            }]
+                                        }
+                                    });
+                                </script>
+                            </div>
+                        {% else %}
+                            <h5 class="card-text">No dreams yet!</h5>                   
+                        {% endif %}
+                    </div>      
                 </div>
             </div>
 
-            <div class="card card-centered col">
-                <div class="card-body">
-                    {% if top_month %}
-                    <p class="card-title profile-text-1">Top Month:</p>
-                    <h5 class="card-text">{{ top_month.month|date:"F" }}</h5>    
-                    {% else %}
-                        <p class="card-title profile-text-1">Top Month:</p>
-                        <h5 class="card-text">No dreams yet!</h5>                    {% endif %}
-                </div>
-            </div>
-
-            <div class="card card-centered col">
-                <div class="card-body">
-                    {% if top_emotions %}
-                        {% for e in top_emotions %}
-                        <p class="card-title profile-text-1">Top Emotions:</p>
-                        <h5 class="card-text">{{ e.name }}</h5>       
-                        {% endfor %}
-                    {% else %}
-                        <p class="card-title profile-text-1">Top Emotions:</p>
-                        <h5 class="card-text">No dreams yet!</h5>                    {% endif %}
-                </div>
-            </div>        
         </div>
+
+    <!-- End of Right Column -->
     </div>
     
 </div>
-
-
 
 {% endblock %}

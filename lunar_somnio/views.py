@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from .models import UserProfile, Dream, Emotion, WeatherSnapshot, DreamAnalysis, Reaction
 from django.contrib import messages
 from .forms import DreamTitleForm, DreamCreateForm, UserForm, UserProfileForm, UserLoginForm
@@ -10,6 +9,7 @@ from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
 import requests
 from django.db.models import Q
+import json
 
 
 # Renders the home page, handles quick dream title submission, and fetches public dreams with reactions
@@ -125,23 +125,78 @@ def user_profile(request):
 
     user_profile = UserProfile.objects.get(user=user)
     total_dreams = Dream.objects.filter(user=user).count()
-    avg_sq = Dream.objects.filter(user=user).aggregate(Avg('sleep_quality'))
+    avg_sq_raw = Dream.objects.filter(user=user).aggregate(Avg('sleep_quality'))['sleep_quality__avg']
+    avg_sq_percent = round(avg_sq_raw * 20, 1) if avg_sq_raw else 0
+
+    avg_ld = Dream.objects.filter(user=user).aggregate(Avg('lucidity'))
     recent_dream = Dream.objects.filter(user=user).order_by('-dreamed_at').first()
+    total_nightmares = Dream.objects.filter(user=user, nightmare=True).count()
+    total_recurring = Dream.objects.filter(user=user, recurring=True).count()
 
     top_month = (Dream.objects.filter(user=user).annotate(month=TruncMonth('dreamed_at')).values('month')
                               .annotate(count=Count('id')).order_by('-count').first())
 
-    top_emotions = (Emotion.objects.filter(dreams__user=user).annotate(count=Count('dreams')).order_by('-count')[:5])
+    top_emotions = (Emotion.objects.filter(dreams__user=user).annotate(count=Count('dreams')).order_by('-count')[:4])
+    emotions_data = json.dumps({
+    'labels': [e.get_category_display() for e in top_emotions],
+    'counts': [e.count for e in top_emotions],
+        })
 
-    context_dict = {}
-    context_dict['user_profile'] = user_profile
-    context_dict['total_dreams'] = total_dreams
-    context_dict['avg_sq'] = avg_sq
-    context_dict['recent_dream'] = recent_dream
-    context_dict['top_month'] = top_month
-    context_dict['top_emotions'] = top_emotions
+    context_dict = {
+        'user_profile': user_profile,
+        'total_dreams': total_dreams,
+        'avg_sq_percent': avg_sq_percent,
+        'recent_dream': recent_dream,
+        'top_month': top_month,
+        'top_emotions': top_emotions,
+        'total_nightmares': total_nightmares,
+        'total_recurring': total_recurring,
+        'emotions_data': emotions_data,
+        'avg_ld': avg_ld,
+    }
 
     return render(request, 'lunar_somnio/profile.html', context=context_dict)
+
+EMOTION_KEYWORDS = {
+    'anger': ['angry', 'rage', 'furious', 'mad', 'hate', 'yell', 'fight', 'violent',
+              'scream', 'attack', 'punch', 'hit', 'frustrate', 'annoy', 'resent',
+              'bitter', 'hostile', 'aggressive', 'explode', 'revenge'],
+
+    'disgust': ['disgusting', 'gross', 'sick', 'vomit', 'dirty', 'ugly', 'horrible',
+                'nasty', 'revolting', 'filthy', 'stink', 'rot', 'decay', 'trash',
+                'repulse', 'awful', 'disturbing', 'nauseating', 'yuck', 'creepy'],
+
+    'fear': ['scared', 'afraid', 'terror', 'nightmare', 'monster', 'dark', 'run',
+             'chase', 'hiding', 'panic', 'danger', 'threat', 'scream', 'trap',
+             'escape', 'ghost', 'shadow', 'lost', 'alone', 'horror', 'dread',
+             'anxiety', 'helpless', 'frozen', 'paralyze', 'evil', 'demon'],
+
+    'happiness': ['happy', 'joy', 'laugh', 'smile', 'love', 'fun', 'excited', 'celebrate',
+                  'wonderful', 'amazing', 'beautiful', 'warm', 'hug', 'peace', 'free',
+                  'flying', 'dance', 'music', 'friend', 'family', 'sunshine', 'bright',
+                  'paradise', 'perfect', 'bliss', 'delight', 'content', 'grateful'],
+
+    'sadness': ['sad', 'cry', 'loss', 'miss', 'grief', 'lonely', 'tears', 'hurt',
+                'broken', 'empty', 'hopeless', 'depress', 'mourn', 'goodbye', 'death',
+                'dead', 'die', 'regret', 'disappoint', 'forget', 'left', 'abandon',
+                'reject', 'fail', 'lose', 'gone', 'never', 'wish'],
+
+    'neutral': ['walk', 'talk', 'sit', 'stand', 'look', 'see', 'hear', 'think',
+                'normal', 'ordinary', 'usual', 'everyday', 'just', 'simply'],
+}
+
+def get_top_emotion(text):
+    text_lowercase = text.lower()
+    emotion_scores = {emotion: 0 for emotion in EMOTION_KEYWORDS}
+
+    for emotion, keywords in EMOTION_KEYWORDS.items():
+        for word in keywords:
+            if word in text_lowercase:
+                emotion_scores[emotion] += 1
+
+    top = max(emotion_scores, key=emotion_scores.get)
+
+    return top if emotion_scores[top] > 0 else 'neutral'
 
 
 # Displays detailed analysis, weather data, and emotions for a specific dream
@@ -150,6 +205,8 @@ def dream_analyzer(request, id):
 
         user = request.user
 
+        user_profile = UserProfile.objects.get(user=user)
+
         dream = get_object_or_404(
             Dream,
             Q(id=id),
@@ -157,6 +214,7 @@ def dream_analyzer(request, id):
         )
 
         emotions = dream.emotions.all()
+        top_emotion = get_top_emotion(dream.text)
 
         if dream.user == user:
             next_dream = Dream.objects.filter(user=user, id__gt=dream.id).order_by('id').first()
@@ -183,6 +241,8 @@ def dream_analyzer(request, id):
             'next_dream': next_dream,
             'prev_dream': prev_dream,
             'is_owner': dream.user == user,
+            'user_profile': user_profile,
+            'top_emotion': top_emotion,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
@@ -315,3 +375,21 @@ def latest_dream(request):
     else:
         messages.info(request, "You haven't recorded any dreams yet!")
         return redirect('lunar_somnio:index')
+
+
+@login_required
+def edit_profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        user_profile.first_name = request.POST.get('first_name')
+        user_profile.last_name = request.POST.get('last_name')
+        user_profile.country = request.POST.get('country')
+        user_profile.gender = request.POST.get('gender')
+        user_profile.age = request.POST.get('age')
+        user_profile.bio = request.POST.get('bio')
+        user_profile.save()
+        return redirect('lunar_somnio:profile')
+
+    context_dict = {'user_profile': user_profile}
+    return render(request, 'lunar_somnio/edit_profile.html', context=context_dict)
