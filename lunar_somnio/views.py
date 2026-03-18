@@ -9,6 +9,7 @@ from django.db.models import Avg, Count
 from django.db.models.functions import TruncMonth
 from django.http import JsonResponse
 import requests
+from django.db.models import Q
 
 
 # Renders the home page, handles quick dream title submission, and fetches public dreams with reactions
@@ -149,11 +150,20 @@ def dream_analyzer(request, id):
 
         user = request.user
 
-        dream = Dream.objects.get(id=id,user=user)
+        dream = get_object_or_404(
+            Dream,
+            Q(id=id),
+            Q(user=user) | Q(visibility="public")
+        )
+
         emotions = dream.emotions.all()
 
-        next_dream = Dream.objects.filter(user=user, id=dream.id+1).first()
-        prev_dream = Dream.objects.filter(user=user, id=dream.id-1).first()
+        if dream.user == user:
+            next_dream = Dream.objects.filter(user=user, id__gt=dream.id).order_by('id').first()
+            prev_dream = Dream.objects.filter(user=user, id__lt=dream.id).order_by('-id').first()
+        else:
+            next_dream = None
+            prev_dream = None
 
         try: weather = WeatherSnapshot.objects.get(dream=dream)
 
@@ -172,6 +182,7 @@ def dream_analyzer(request, id):
             'emotions': emotions,
             'next_dream': next_dream,
             'prev_dream': prev_dream,
+            'is_owner': dream.user == user,
         }
 
         return render(request, 'lunar_somnio/dream_analyzer.html', context=context_dict)
