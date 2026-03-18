@@ -32,42 +32,20 @@
     </div>
 
 
-    <div class="container full-page mb-5">
-        <div class="box">
+    <div class="container-fluid mb-5">
+        <div class="box fade-section text-center">
             <img src="{% static "images/Logo3.png" %}" alt="Dream Feed" class="mb-4">
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             {% for dream in public_dreams %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="box dream-bg" style="--bg-image: url('{% static "images/BG4.png" %}')">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ dream.title }}</h5>
+                <div id="dream-{{ dream.id }}" class="col-12 col-md-6 col-lg-4 mb-4 fade-section">
+                    {% include "lunar_somnio/dream_card.html" with dream=dream truncate=True %}
+                </div>
 
-                                <p class="text-muted mb-2">
-                                    dreamed by {{ dream.user.username }}
-                                </p>
-
-                                <p class="card-text">
-                                    {{ dream.text|truncatechars:300 }}
-                                </p>
-
-                                <p class="mb-2">
-                                    <small class="text-muted">
-                                        Dreamed at: {{ dream.dreamed_at|date:"d M Y, H:i" }}
-                                    </small>
-                                </p>
-
-                                {% if dream.emotions.all %}
-                                    <div class="mb-2">
-                                        {% for emotion in dream.emotions.all %}
-                                            <span class="badge badge-secondary">{{ emotion.name }}</span>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
+                <div class="modal fade" id="dreamModal-{{ dream.id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        {% include "lunar_somnio/dream_card.html" with dream=dream truncate=False %}
                     </div>
                 </div>
             {% empty %}
@@ -80,4 +58,10 @@
         </div>
     </div>
 
+{% endblock %}
+
+{%  block scripts %}
+    <script src="{% static 'js/dream_reaction.js' %}"></script>
+    <script src="{% static 'js/fade_scroll.js' %}"></script>
+    <script src="{% static 'js/dream_card_particles.js' %}"></script>
 {% endblock %}

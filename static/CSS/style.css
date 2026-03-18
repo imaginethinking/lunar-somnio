@@ -295,6 +295,35 @@ input[type="range"]::-moz-range-thumb {
   opacity: 1;
 }
 
+.reaction-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.reaction-bar form {
+  margin: 0;
+}
+
+.reaction-bar .btn {
+  width: 100%;
+  white-space: nowrap;
+  padding: 0.25rem 0.4rem;
+}
+
+/*dreams fading in/out on the index page*/
+.fade-section {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 2s ease, transform 2s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Emotion Tags */
 .emotion-tag {
   background-color: #f1f1f1;
@@ -310,4 +339,13 @@ input[type="range"]::-moz-range-thumb {
 /* Emotions Selection Container */
 .select2-container {
     width: 100% !important;
+}
+
+.dream-star-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  filter: none;
 }

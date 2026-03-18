@@ -1,0 +1,117 @@
+{% load static %}
+
+<div class="box dream-bg d-flex justify-content-center dream-card-particles" data-dream-colour="{{ dream.colour }}" style="--bg-image: url('{% static "images/BG4.png" %}')">
+    <div class="card h-100 shadow-sm mx-auto w-100">
+        <div class="card-body d-flex flex-column">
+
+            <h5 class="card-title" style="color: {{ dream.colour }};">{{ dream.title }}</h5>
+
+            <p class="text-muted mb-2">
+                dreamed by {{ dream.user.username }}
+            </p>
+
+            <p class="card-text text-left">
+                {% if truncate %}
+                    {{ dream.text|truncatechars:50 }}
+                {% else %}
+                    {{ dream.text }}
+                {% endif %}
+            </p>
+
+            <p class="mb-2">
+                <small class="text-muted text-nowrap">
+                    Dreamed at: {{ dream.dreamed_at|date:"d M Y" }}
+                </small>
+            </p>
+
+            {% if dream.emotions.exists %}
+            <div class="mb-2">
+                {% for emotion in dream.emotions.all %}
+                    <span class="badge badge-secondary">
+                        {{ emotion }}
+                    </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if truncate %}
+            <div class="mt-auto pt-3 mb-3">
+
+                {% if user.is_authenticated %}
+                <div class="reaction-bar">
+
+                    <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="emoji" value="heart">
+                        <button type="submit"
+                                class="btn btn-sm {% if 'heart' in dream.user_reacted %}btn-danger{% else %}btn-outline-danger{% endif %}"
+                                data-emoji="heart">
+                            ❤️ <span class="reaction-count">{{ dream.heart_count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="emoji" value="laugh">
+                        <button type="submit"
+                                class="btn btn-sm {% if 'laugh' in dream.user_reacted %}btn-warning{% else %}btn-outline-warning{% endif %}"
+                                data-emoji="laugh">
+                            😂 <span class="reaction-count">{{ dream.laugh_count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="emoji" value="surprised">
+                        <button type="submit"
+                                class="btn btn-sm {% if 'surprised' in dream.user_reacted %}btn-secondary{% else %}btn-outline-secondary{% endif %}"
+                                data-emoji="surprised">
+                            😮 <span class="reaction-count">{{ dream.surprised_count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="emoji" value="sad">
+                        <button type="submit"
+                                class="btn btn-sm {% if 'sad' in dream.user_reacted %}btn-primary{% else %}btn-outline-primary{% endif %}"
+                                data-emoji="sad">
+                            😢 <span class="reaction-count">{{ dream.sad_count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="emoji" value="fire">
+                        <button type="submit"
+                                class="btn btn-sm {% if 'fire' in dream.user_reacted %}btn-dark{% else %}btn-outline-dark{% endif %}"
+                                data-emoji="fire">
+                            🔥 <span class="reaction-count">{{ dream.fire_count }}</span>
+                        </button>
+                    </form>
+
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class="d-flex flex-wrap">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-dark mr-2"
+                    data-toggle="modal"
+                    data-target="#dreamModal-{{ dream.id }}">
+                    View Dream
+                </button>
+
+                <a href="{% url 'lunar_somnio:dream_analyzer' dream.id %}">
+                    <button class="btn btn-sm btn-outline-dark" type="button">
+                        View Dream Analysis
+                    </button>
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>

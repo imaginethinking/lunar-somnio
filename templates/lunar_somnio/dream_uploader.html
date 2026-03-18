@@ -6,19 +6,8 @@
     Dream Uploader
 {% endblock %}
 
-{% block scripts %}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#id_emotions').select2();
-    });
-</script>
-{% endblock %}
-
-
 {% block body_block %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="container mt-5">
 
@@ -28,11 +17,6 @@
 
     <form method="post" action="{% url 'lunar_somnio:upload_dream' %}">
         {% csrf_token %}
-        <script>
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {document.getElementById('latitude').value = position.coords.latitude;
-                    document.getElementById('longitude').value = position.coords.longitude;});}
-        </script>
 
         {{ form.title.as_hidden }}
 
@@ -62,6 +46,7 @@
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
                     <div class="card p-1 m-1">
                         <div class="form-group mb-0">
+                            {{ form.emotions.label_tag }}
                             {{ form.emotions }}
                         </div>
                     </div>
@@ -93,7 +78,7 @@
 
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG4.png" %}')">
-                    <div class="card p-3 m-1">
+                    <div class="card p-2 m-1">
                         <div class="form-check">
                             {{ form.nightmare }} Is this a <em>nightmare</em>
                         </div>
@@ -134,7 +119,14 @@
                             Dream <em>colour</em>
                         </div>
                         <div>
-                            {{ form.colour }}
+                            {{ form.colour.label_tag }}
+                            <select name="colour" id="{{ form.colour.id_for_label }}" class="form-control">
+                                {% for value, label in form.fields.colour.choices %}
+                                    <option value="{{ value }}" style="color: {{ value }};">
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -164,5 +156,13 @@
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
     <script src="{% static 'js/dream_upload_sliders.js' %}"></script>
+    <script src="{% static 'js/colour_selector_text.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'js/dream_emotions_select.js' %}"></script>
+    <script src="{% static 'js/position_locator.js' %}"></script>
 {% endblock %}

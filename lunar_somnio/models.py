@@ -16,6 +16,23 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+class Emotion(models.Model):
+    CATEGORY_CHOICES = [
+        ("anger", "Anger"),
+        ("disgust", "Disgust"),
+        ("fear", "Fear"),
+        ("happiness", "Happiness"),
+        ("sadness", "Sadness"),
+        ("neutral", "Neutral"),
+    ]
+
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, unique=True)
+
+    def __str__(self):
+        return self.get_category_display()
+
+
 class Dream(models.Model):
     LUCIDITY_CHOICES = (
         (1, "Very Low"),
@@ -38,9 +55,20 @@ class Dream(models.Model):
         ("public", "Public"),
     )
 
+    COLOUR_CHOICES = (
+        ("#444444", "Charcoal"),
+        ("#f29ab5", "Dream Pink"),
+        ("#7fb8ff", "Sky Blue"),
+        ("#82d6a3", "Soft Green"),
+        ("#ffd36b", "Golden Dream"),
+        ("#bfa3ff", "Lavender"),
+        ("#ff9aa2", "Rose"),
+        ("#7ed9c4", "Mint"),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='dreams')
 
-    emotions = models.ManyToManyField("Emotion", related_name="dreams", blank=True)
+    emotions = models.ManyToManyField("Emotion", related_name="dreams")
 
     title = models.CharField(max_length=255)
     text = models.TextField()
@@ -50,7 +78,11 @@ class Dream(models.Model):
     image_url = models.URLField(blank=True, null=True)
     lucidity = models.IntegerField()
     nightmare = models.BooleanField()
-    colour = models.CharField(max_length=7, blank=True, default="#ffffff")
+    colour = models.CharField(
+        max_length=7,
+        choices=COLOUR_CHOICES,
+        default="#000000"
+    )
     recurring = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True) # Not in ERD
     updated_at = models.DateTimeField(auto_now=True)
@@ -71,29 +103,14 @@ class Reaction(models.Model):
     class Meta:
         unique_together = ("user", "dream", "emoji")
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dream = models.ForeignKey(Dream, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reactions")
+    dream = models.ForeignKey(Dream, on_delete=models.CASCADE, related_name="reactions")
 
-    emoji = models.CharField(max_length=4, choices=EMOJI_CHOICES)
+    emoji = models.CharField(max_length=20, choices=EMOJI_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.emoji
-
-class Emotion(models.Model):
-    CATEGORY_CHOICES = [
-        ("Anger", "Anger"),
-        ("Disgust", "Disgust"),
-        ("Fear", "Fear"),
-        ("Happiness", "Happiness"),
-        ("Sadness", "Sadness"),
-        ("Neutral", "Neutral"),
-    ]
-
-    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES)
-
-    def __str__(self):
-        return self.category
 
 
 class DreamAnalysis(models.Model):
