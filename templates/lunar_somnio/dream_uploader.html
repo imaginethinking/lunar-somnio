@@ -46,7 +46,6 @@
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}')">
                     <div class="card p-1 m-1">
                         <div class="form-group mb-0">
-                            {{ form.emotions.label_tag }}
                             {{ form.emotions }}
                         </div>
                     </div>
@@ -60,30 +59,25 @@
                     </div>
                 </div>
 
+                <div class="box mx-auto dream-bg mb-3 d-flex" style="--bg-image: url('{% static "images/BG50.png" %}')">
+                    <div class="card p-2 m-1 col">
+                        <div class="form-check">
+                            {{ form.recurring }} This a <em>recurring</em> dream
+                        </div>
+                    </div>
 
+                    <div class="card p-2 m-1 col">
+                        <div class="form-check">
+                            {{ form.nightmare }} This was a <em>nightmare</em>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
 
             <!-- column 2 for the dream flags, sleep quality, lucidity, and background image -->
             <div class="col-lg-4">
-
-                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}')">
-                    <div class="card p-2 m-1">
-                        <div class="form-check">
-                            {{ form.recurring }} This a <em>recurring</em> dream
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}')">
-                    <div class="card p-2 m-1">
-                        <div class="form-check">
-                            {{ form.nightmare }} This was a <em>nightmare</em>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}')">
                     <div class="slider-card m-1">
@@ -144,7 +138,7 @@
 
                 <div class="box mx-auto dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}')">
                     <button class="btn btn-block">
-                        <strong>Add to Journal</strong>
+                        <p class="mb-0" style="color: white ">Add to Journal</p>
                     </button>
                 </div>
 
