@@ -131,7 +131,7 @@ def user_profile(request):
     top_month = (Dream.objects.filter(user=user).annotate(month=TruncMonth('dreamed_at')).values('month')
                               .annotate(count=Count('id')).order_by('-count').first())
 
-    top_emotions = (Emotion.objects.filter(dreams__user=user).annotate(count=Count('dreams')).order_by('-count')[:5])
+    top_emotions = (Emotion.objects.filter(dreams__user=user).annotate(count=Count('dreams')).order_by('-count')[:4])
     emotions_data = json.dumps({
     'labels': [e.get_category_display() for e in top_emotions],
     'counts': [e.count for e in top_emotions],
