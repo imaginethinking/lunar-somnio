@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# User profile model with fields require to set up an account
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -17,6 +18,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+# Emotion model with categories of emotions used for dreams
 class Emotion(models.Model):
     CATEGORY_CHOICES = [
         ("anger", "Anger"),
@@ -33,6 +35,10 @@ class Emotion(models.Model):
         return self.get_category_display()
 
 
+# Dream model with fields such as title, text, sleep quality, dreamed at, and lucidity
+# Has a many-to-many relationship with emotions, one-to-one relationship with user profile,
+# and a one-to-many relationship with reactions
+# also takes in latitude and longitude for location information related to the dream
 class Dream(models.Model):
     LUCIDITY_CHOICES = (
         (1, "Very Low"),
@@ -90,6 +96,9 @@ class Dream(models.Model):
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
 
+
+# Reaction model with fields such as emoji and created_at
+# Has a many-to-one relationship with dreams and users
 class Reaction(models.Model):
     EMOJI_CHOICES = (
         ("heart", "❤️"),
@@ -113,12 +122,17 @@ class Reaction(models.Model):
         return self.emoji
 
 
+# DreamAnalysis model with fields such as top emotion and sentiment score
+# Has a one-to-one relationship with dreams
 class DreamAnalysis(models.Model):
     dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
 
     top_emotion = models.ForeignKey(Emotion, on_delete=models.CASCADE)
     sentiment_score = models.IntegerField()
 
+
+# WeatherSnapshot model with fields such as moon phase, moon illumination, and location name
+# Has a one-to-one relationship with dreams
 class WeatherSnapshot(models.Model):
     dream = models.OneToOneField(Dream, on_delete=models.CASCADE)
 
