@@ -205,13 +205,13 @@ def dream_analyzer(request, id):
 
         user = request.user
 
-        user_profile = UserProfile.objects.get(user=user)
-
         dream = get_object_or_404(
             Dream,
             Q(id=id),
             Q(user=user) | Q(visibility="public")
         )
+
+        user_profile = UserProfile.objects.get(user=dream.user)
 
         emotions = dream.emotions.all()
         top_emotion = get_top_emotion(dream.text)
@@ -377,6 +377,7 @@ def latest_dream(request):
         return redirect('lunar_somnio:index')
 
 
+# Renders the edit profile html page
 @login_required
 def edit_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
