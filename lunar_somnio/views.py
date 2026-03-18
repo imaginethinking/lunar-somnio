@@ -34,6 +34,7 @@ def index(request):
         .order_by("-created_at")
     )
 
+    # Counts the number of reactions for each type of reaction per dream
     for dream in public_dreams:
         dream.heart_count = dream.reactions.filter(emoji="heart").count()
         dream.laugh_count = dream.reactions.filter(emoji="laugh").count()
@@ -202,6 +203,7 @@ def upload_dream(request):
             dream.longitude = request.POST.get('longitude')
             dream.save()
 
+            # Fetch weather data using the latitude and longitude data from the dream create form
             response = requests.get('http://api.weatherapi.com/v1/history.json', params={
                 'key': 'f68f953a7cf64c22830231541261503',
                 'q': f"{dream.latitude},{dream.longitude}",
@@ -232,7 +234,8 @@ def upload_dream(request):
     return render(request, "lunar_somnio/dream_uploader.html", {"form": form})
 
 
-# Handles AJAX requests for adding or removing emoji reactions on public dreams
+# Handles AJAX/AsyncJS requests for adding or removing emoji reactions on public dreams
+# So that the index page does not need to fully reload when a user reacts to a dream
 @login_required
 def react_to_dream(request, dream_id):
     if request.method != "POST":
