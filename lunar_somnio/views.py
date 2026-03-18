@@ -306,3 +306,20 @@ def latest_dream(request):
     else:
         messages.info(request, "You haven't recorded any dreams yet!")
         return redirect('lunar_somnio:index')
+    
+@login_required
+def edit_profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    
+    if request.method == 'POST':
+        user_profile.first_name = request.POST.get('first_name')
+        user_profile.last_name = request.POST.get('last_name')
+        user_profile.country = request.POST.get('country')
+        user_profile.gender = request.POST.get('gender')
+        user_profile.age = request.POST.get('age')
+        user_profile.bio = request.POST.get('bio')
+        user_profile.save()
+        return redirect('lunar_somnio:profile')
+    
+    context_dict = {'user_profile': user_profile}
+    return render(request, 'lunar_somnio/edit_profile.html', context=context_dict)
