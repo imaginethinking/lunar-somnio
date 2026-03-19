@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!-- Main Row -->
-<div class="row g-2 p-5">
+<div class="row g-2 p-5" style="max-width: 1400px; margin: 0 auto;">
 
     <!-- Left Column -->
     <div class="col-5">
@@ -32,7 +32,11 @@
         <div class="row m-0">
             <div class="box d-flex dream-bg mb-3 col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
                 <div class="card col py-2">
+                    {% if user_profile.country %}
                     <p class="card-text text-center">{{ user_profile.country }}</p>
+                    {% else %}
+                    <p class="card-text text-center profile-backuptext">Add your Country</p>
+                    {% endif %}
                 </div>
 
                 <div class="card col py-2">
