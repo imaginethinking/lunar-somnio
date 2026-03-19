@@ -19,11 +19,21 @@
         <!-- Profile Name & Image Card -->
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG25.png" %}');">
             <div class="card d-flex flex-row align-items-center p-2">
+                {% if user_profile.profile_pic %}
                 <img class="userpic" src='{{ user_profile.profile_pic }}'>
-                <div>    
+                {% else %}
+                    <div class="userpic userpic-placeholder">
+                        <span>{{ user_profile.user.first_name|first|upper }}</span>
+                    </div>
+                {% endif %}
+                <div>
                     <p class="mb-0 ml-2 username">@{{ user_profile.display_name }}</p>
-                    <h5 class="card-text ml-2">{{ user_profile.first_name }} {{ user_profile.last_name }}</h5>    
-                    <p class="dream-bodytext mb-0 ml-2" style="margin-top: -8px;">{{ user_profile.bio }}</p>
+                    <h5 class="card-text ml-2">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h5>
+                    {% if user_profile.bio %}
+                    <p class="dream-bodytext mb-0 ml-2 pr-2" style="margin-top: -8px;">{{ user_profile.bio }}</p>
+                    {% else %}
+                    <p class="dream-bodytext mb-0 ml-2 pr-2" style="margin-top: -8px;">No bio yet! Click the Edit Profile button to add one.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -52,12 +62,13 @@
         <!-- Most Recent Dream w Link -->
         <div class="box d-flex dream-bg mb-3 col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
             <div class="card col py-2">
-                <p class="profile-subtitles mb-0"> On {{ recent_dream.dreamed_at|date:"F j, Y" }}, you recorded your latest dream entry:</p>
                 {% if recent_dream %}
+                    <p class="profile-subtitles mb-0"> On {{ recent_dream.dreamed_at|date:"F j, Y" }}, you recorded your latest dream entry:</p>
                     <a href="{% url 'lunar_somnio:latest_dream' %}">
                     <h5 class="card-text dream-link">{{ recent_dream.title }}</h5>
                     </a>
                 {% else %}
+                    <p class="profile-subtitles mb-0"> Your latest dream entry:</p>
                     <h5 class="card-text">No dreams yet!</h5>
                 {% endif %}
             </div>
@@ -134,7 +145,7 @@
                         {% if top_month %}
                             <h5 class="card-text text-center mb-1 pb-2">{{ top_month.month|date:"F" }}</h5>    
                         {% else %}
-                            <h5 class="card-text">No dreams yet!</h5>                    
+                            <h5 class="card-text text-center mb-1 pb-2">No dreams yet!</h5>
                         {% endif %}
                     </div>
                 </div>
@@ -180,7 +191,7 @@
                                 </script>
                             </div>
                         {% else %}
-                            <h5 class="card-text">No dreams yet!</h5>                   
+                            <h5 class="card-text text-center mb-1 pb-2">No dreams yet!</h5>
                         {% endif %}
                     </div>      
                 </div>
