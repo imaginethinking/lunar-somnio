@@ -77,6 +77,16 @@ class DreamCreateForm(forms.ModelForm):
 
 # Core user registration form mapping to Django's built-in User model
 class UserForm(forms.ModelForm):
+    first_name = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control dream-title-input mb-3',
+        'placeholder': 'First Name',
+        'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+    }))
+    last_name = forms.CharField(required=True, widget=forms.TextInput(attrs={
+        'class': 'form-control dream-title-input mb-3',
+        'placeholder': 'Last Name',
+        'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
+    }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control dream-title-input mb-3',
         'placeholder': 'Password',
@@ -85,19 +95,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control dream-title-input mb-3',
-                'placeholder': 'Username',
-                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control dream-title-input mb-3',
-                'placeholder': 'Email Address',
-                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
-            })
-        }
+        fields = ('first_name', 'last_name', 'password')
 
 # Extended registration form for custom demographic data
 class UserProfileForm(forms.ModelForm):
@@ -140,7 +138,7 @@ class UserProfileForm(forms.ModelForm):
 class UserLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control dream-title-input mb-3',
-        'placeholder': 'Username',
+        'placeholder': 'Username (e.g. firstname + lastname)',
         'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={

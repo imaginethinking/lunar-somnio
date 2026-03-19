@@ -79,30 +79,46 @@ def login_view(request):
     return render(request, 'lunar_somnio/login.html', {'login_form': login_form})
 
 
-# Handles new user registration, creating both User and UserProfile records
+# Handles new user registration and dynamically generates a login username with a space
 def register_view(request):
     if request.method == 'POST':
+        # Import the User model safely within the view
+        from django.contrib.auth.models import User
+        
         user_form = UserForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         
         if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database securely
-            user = user_form.save(commit=False)
-            user.set_password(user.password)
-            user.save()
+            # Extract clean data directly
+            first = user_form.cleaned_data.get('first_name').strip()
+            last = user_form.cleaned_data.get('last_name').strip()
+            raw_password = user_form.cleaned_data.get('password')
             
-            # Save the user profile data to the database
+            username = profile_form.cleaned_data.get('display_name').strip()
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'That username is already taken.')
+                return render(request, 'lunar_somnio/register.html', {'user_form': user_form, 'profile_form': profile_form})
+                
+            # Safely create the user using Django's core helper method
+            user = User.objects.create_user(
+                username=username,
+                password=raw_password,
+                first_name=first,
+                last_name=last
+            )
+            
+            # Link and save the user profile
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
             
-            messages.success(request, 'Account successfully created! You can now log in.')
+            # Show the generated username so the user knows exactly what to log in with
+            messages.success(request, f'Account successfully created! Your login username is: {username}')
             return redirect('lunar_somnio:login')
         else:
             messages.error(request, 'Registration failed. Please check your inputs.')
             
     else:
-        # Not a HTTP POST, so we render our form using two ModelForm instances
         user_form = UserForm()
         profile_form = UserProfileForm()
         
@@ -383,8 +399,8 @@ def edit_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        user_profile.first_name = request.POST.get('first_name')
-        user_profile.last_name = request.POST.get('last_name')
+        user_profile.user.first_name = request.POST.get('first_name')
+        user_profile.user.last_name = request.POST.get('last_name')
         user_profile.country = request.POST.get('country')
         user_profile.gender = request.POST.get('gender')
         user_profile.age = request.POST.get('age')
