@@ -27,6 +27,16 @@
                 {% csrf_token %}
                 
                 {{ user_form.username }}
+                
+                <div class="row">
+                    <div class="col-6 pr-2">
+                        {{ user_form.first_name }}
+                    </div>
+                    <div class="col-6 pl-2">
+                        {{ user_form.last_name }}
+                    </div>
+                </div>
+                
                 {{ user_form.email }}
                 {{ user_form.password }}
                 
