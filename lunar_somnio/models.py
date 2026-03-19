@@ -81,7 +81,6 @@ class Dream(models.Model):
     sleep_quality = models.IntegerField(choices=SLEEP_QUALITY_CHOICES)
     dreamed_at = models.DateTimeField()
     visibility = models.CharField(max_length=10, choices=VISIBILITY_CHOICES, default="private")
-    image_url = models.URLField(blank=True, null=True)
     lucidity = models.IntegerField()
     nightmare = models.BooleanField()
     colour = models.CharField(
