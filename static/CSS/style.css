@@ -358,3 +358,28 @@ input[type="range"]::-moz-range-thumb {
   height: 50%;
   object-fit: cover;
 }
+
+.profile-backuptext {
+  color: darkgray;
+  font-style: italic;
+  font-size: 10px;
+  margin-top: 5%;
+}
+
+.userpic-placeholder {
+    background: linear-gradient(#6e61bc, #ad325f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 20%;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.userpic-placeholder span {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

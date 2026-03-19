@@ -95,14 +95,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password')
-        widgets = {
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control dream-title-input mb-3',
-                'placeholder': 'Email Address',
-                'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
-            })
-        }
+        fields = ('first_name', 'last_name', 'password')
 
 # Extended registration form for custom demographic data
 class UserProfileForm(forms.ModelForm):
@@ -131,7 +124,7 @@ class UserProfileForm(forms.ModelForm):
         widgets = {
             'display_name': forms.TextInput(attrs={
                 'class': 'form-control dream-title-input mb-3',
-                'placeholder': 'Display Name (Public)',
+                'placeholder': 'Username',
                 'style': 'font-size: 0.9rem; padding: 12px 20px; background-color: #f8f9fa; border: none;'
             }),
             'age': forms.NumberInput(attrs={

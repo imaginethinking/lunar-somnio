@@ -92,23 +92,16 @@ def register_view(request):
             # Extract clean data directly
             first = user_form.cleaned_data.get('first_name').strip()
             last = user_form.cleaned_data.get('last_name').strip()
-            email = user_form.cleaned_data.get('email')
             raw_password = user_form.cleaned_data.get('password')
             
-            # Auto-generate username EXACTLY as "Firstname Lastname" with a space
-            base_username = f"{first} {last}"
-            username = base_username
-            counter = 1
-            
-            # Ensure the generated username is absolutely unique in the database
-            while User.objects.filter(username=username).exists():
-                username = f"{base_username} {counter}"
-                counter += 1
+            username = profile_form.cleaned_data.get('display_name').strip()
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'That username is already taken.')
+                return render(request, 'lunar_somnio/register.html', {'user_form': user_form, 'profile_form': profile_form})
                 
             # Safely create the user using Django's core helper method
             user = User.objects.create_user(
                 username=username,
-                email=email,
                 password=raw_password,
                 first_name=first,
                 last_name=last
@@ -403,11 +396,11 @@ def latest_dream(request):
 # Renders the edit profile html page
 @login_required
 def edit_profile(request):
-    user_profile = UserProfile.objects.get(request.user.id)
+    user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        user_profile.first_name = request.POST.get('first_name')
-        user_profile.last_name = request.POST.get('last_name')
+        user_profile.user.first_name = request.POST.get('first_name')
+        user_profile.user.last_name = request.POST.get('last_name')
         user_profile.country = request.POST.get('country')
         user_profile.gender = request.POST.get('gender')
         user_profile.age = request.POST.get('age')
