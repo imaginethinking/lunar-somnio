@@ -19,7 +19,7 @@ from lunar_somnio.models import (
 )
 
 
-def populate(num_users=10, dreams_per_user=5):
+def populate(num_users=25, dreams_per_user=15):
     populate_emotions()
     populate_users_and_dreams(num_users, dreams_per_user)
 

@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="box dream-bg d-flex justify-content-center dream-card-particles" data-dream-colour="{{ dream.colour }}" style="--bg-image: url('{% static "images/BG4.png" %}')">
+<div class="box pop dream-bg d-flex justify-content-center dream-card-particles" data-dream-colour="{{ dream.colour }}" style="--bg-image: url('{% static "images/BG4.png" %}')">
     <div class="card h-100 shadow-sm mx-auto w-100">
         <div class="card-body d-flex flex-column">
 
@@ -39,7 +39,7 @@
 
                 {% if user.is_authenticated %}
                 <div class="reaction-bar">
-
+                    <div class="pop">
                     <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
                         {% csrf_token %}
                         <input type="hidden" name="emoji" value="heart">
@@ -49,7 +49,9 @@
                             ❤️ <span class="reaction-count">{{ dream.heart_count }}</span>
                         </button>
                     </form>
+                    </div>
 
+                    <div class="pop">
                     <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
                         {% csrf_token %}
                         <input type="hidden" name="emoji" value="laugh">
@@ -59,7 +61,9 @@
                             😂 <span class="reaction-count">{{ dream.laugh_count }}</span>
                         </button>
                     </form>
+                    </div>
 
+                    <div class="pop">
                     <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
                         {% csrf_token %}
                         <input type="hidden" name="emoji" value="surprised">
@@ -69,7 +73,9 @@
                             😮 <span class="reaction-count">{{ dream.surprised_count }}</span>
                         </button>
                     </form>
+                    </div>
 
+                    <div class="pop">
                     <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
                         {% csrf_token %}
                         <input type="hidden" name="emoji" value="sad">
@@ -79,7 +85,9 @@
                             😢 <span class="reaction-count">{{ dream.sad_count }}</span>
                         </button>
                     </form>
+                    </div>
 
+                    <div class="pop">
                     <form method="POST" action="{% url 'lunar_somnio:react_to_dream' dream.id %}" class="reaction-form">
                         {% csrf_token %}
                         <input type="hidden" name="emoji" value="fire">
@@ -89,6 +97,7 @@
                             🔥 <span class="reaction-count">{{ dream.fire_count }}</span>
                         </button>
                     </form>
+                    </div>
 
                 </div>
                 {% endif %}
@@ -96,6 +105,7 @@
             </div>
 
             <div class="d-flex flex-wrap">
+                <div class="pop">
                 <button
                     type="button"
                     class="btn btn-sm btn-outline-dark mr-2"
@@ -103,12 +113,15 @@
                     data-target="#dreamModal-{{ dream.id }}">
                     View Dream
                 </button>
+                </div>
 
+                <div class="pop">
                 <a href="{% url 'lunar_somnio:dream_analyzer' dream.id %}">
                     <button class="btn btn-sm btn-outline-dark" type="button">
                         View Dream Analysis
                     </button>
                 </a>
+                </div>
             </div>
             {% endif %}
 

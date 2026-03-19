@@ -383,3 +383,12 @@ input[type="range"]::-moz-range-thumb {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.pop {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pop:hover {
+  transform: scale(1.08) rotate(0.5deg);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}

@@ -107,18 +107,31 @@
 <div class="d-flex justify-content-between px-4 mb-5">
 
     {% if is_owner %}
-    <a href="{% url 'lunar_somnio:edit_dream' dream.id  %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button></a>
+
+        <a href="{% url 'lunar_somnio:edit_dream' dream.id  %}">
+            <div class="pop">
+                <button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">Edit Dream</button>
+            </div>
+        </a>
+
     {% else %}
-    <a href="{% url 'lunar_somnio:index' %}"><button class="btn button1 dream-bg mx-3" style="--bg-image: url('{% static "images/BG75.png" %}')">Back</button></a>
+        <div class="pop">
+        <a href="{% url 'lunar_somnio:index' %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">Back</button></a>
+        </div>
     {% endif %}
         <div class="d-flex" style="margin-right: 16px">
             {% if prev_dream %}
-            <a href="{% url 'lunar_somnio:dream_analyzer' prev_dream.id  %}"><button class="btn button1 dream-bg mx-2" style="--bg-image: url('{% static "images/BG75.png" %}')">
+                <div class="pop">
+                <a href="{% url 'lunar_somnio:dream_analyzer' prev_dream.id  %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
                 <i class="bi bi-chevron-left"></i></button></a>
+                </div>
+                <div class="mr-3"></div>
             {% endif %}
             {% if next_dream %}
-            <a href="{% url 'lunar_somnio:dream_analyzer' next_dream.id  %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
+                <div class="pop">
+                <a href="{% url 'lunar_somnio:dream_analyzer' next_dream.id  %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG75.png" %}')">
                 <i class="bi bi-chevron-right"></i></button></a>
+                </div>
             {% endif %}
         </div>
 

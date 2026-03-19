@@ -16,14 +16,14 @@
         <div class="box dream-bg mb-3" style="--bg-image: url('{% static "images/BG50.png" %}');">
             <p class="da-maintitle mb-0 text-center" style="color: white"><i>Edit your profile</i></p>
         </div>
-   
+
         <form method="POST">
             {% csrf_token %}
 
             <!-- Edit First Name & Last Name -->
             <div class="row m-0 mb-3">
                 <div class="box d-flex dream-bg col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
-                    
+
                     <div class="card col py-2">
                         <p class="profile-subtitles text-center mb-1">First Name</p>
                         <input type="text" name="first_name" value="{{ user_profile.first_name }}" class="form-control">
@@ -40,7 +40,7 @@
             <!-- Edit Country, Gender, Age Row -->
             <div class="row m-0 mb-3">
                 <div class="box d-flex dream-bg col-12" style="--bg-image: url('{% static "images/BG25.png" %}')">
-                    
+
                     <div class="card col py-2">
                         <p class="profile-subtitles text-center mb-1">Country</p>
                         <input type="text" name="country" value="{{ user_profile.country }}" class="form-control">
@@ -82,8 +82,12 @@
 
     <!-- Cancel / Save Buttons -->
     <div class="d-flex justify-content-between">
-        <a href="{% url 'lunar_somnio:profile' %}" class="btn">Cancel</a>
-            <button type="submit" class="btn">Save Changes</button>
+        <div class="pop mr-3">
+        <a href="{% url 'lunar_somnio:profile' %}" class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG50.png" %}')">Cancel</a>
+        </div>
+        <div class="pop">
+            <button type="submit" class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG50.png" %}')">Save Changes</button>
+        </div>
     </div>
 
     </form>

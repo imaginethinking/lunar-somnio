@@ -75,7 +75,11 @@
         </div> 
 
         <div class="d-flex justify-content-start">
-        <a href="{% url 'lunar_somnio:edit_profile' %}"><button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG50.png" %}')">Edit Profile</button></a>
+            <div class="pop">
+                <a href="{% url 'lunar_somnio:edit_profile' %}">
+                    <button class="btn button1 dream-bg" style="--bg-image: url('{% static "images/BG50.png" %}')">Edit Profile</button>
+                </a>
+            </div>
         </div>
 
      <!-- End of Left Column -->
